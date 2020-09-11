@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 import {View, Text, StyleSheet, ImageBackground, Image} from 'react-native';
 //Importamos las medidas del APP
@@ -8,10 +8,16 @@ import {Button} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 //Importamos la libreria de degradaciones
 import LinearGradient from 'react-native-linear-gradient';
+//Importamos la libreria de modal
+import Modal from 'react-native-modal';
 //--------------------------------------------
 //Inicio del programa
 //--------------------------------------------
 const Selector = ({navigation}) => {
+  //-----------------------------
+  //State LOCALES
+  const [modal, guardarModal] = useState(false);
+  //-------------------------------
   //Funcion direccion TV
   const onPressBoPlus = () => {
     console.log('BOPLUS');
@@ -27,6 +33,14 @@ const Selector = ({navigation}) => {
     console.log('QD');
     navigation.navigate('qdshow');
   };
+  //Funcion CONTACTOS
+  const onPressContact = () => {
+    console.log('PRESIONO EL CONTACTO');
+    guardarModal(true);
+  };
+  //--------------------------------------------------------
+  // Cambios
+  //----------------------------------------------------------
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -46,42 +60,35 @@ const Selector = ({navigation}) => {
             <Button
               title="Contactos"
               type="outline"
+              buttonStyle={{
+                borderColor: '#fff',
+              }}
               titleStyle={{
+                color: 'white',
                 fontFamily: 'PFBeauSansPro-Regular',
                 fontSize: 15,
               }}
-              onPress={onPressRadio}
+              onPress={onPressContact}
             />
           </View>
         </View>
         <View style={styles.seccion_1}>
           <Button
             icon={
-              <Icon
-                name="arrow-right"
-                size={12}
-                color="white"
-                style={styles.icono}
-              />
+              <Icon name="tv" size={20} color="#FFB718" style={styles.icono} />
             }
             title="BoPlus TV"
+            type="outline"
             buttonStyle={{
-              backgroundColor: '#D3441C',
-              color: '',
               paddingHorizontal: DEVICE_WIDTH * 0.1,
               borderRadius: 10,
-              borderColor: 'white',
+              borderColor: '#FFB718',
               borderWidth: 1,
             }}
             titleStyle={{
+              color: '#FFB718',
               fontFamily: 'PFBeauSansPro-BlackItalic',
-              fontSize: 20,
-            }}
-            ViewComponent={LinearGradient} // Don't forget this!
-            linearGradientProps={{
-              colors: ['#FFB718', '#D3441C'],
-              start: {x: 0, y: 0.5},
-              end: {x: 1, y: 0.5},
+              fontSize: 22,
             }}
             onPress={onPressBoPlus}
           />
@@ -90,30 +97,25 @@ const Selector = ({navigation}) => {
           <Button
             icon={
               <Icon
-                name="arrow-right"
-                size={12}
-                color="white"
+                name="volume-up"
+                size={20}
+                color="#4E869F"
                 style={styles.icono}
               />
             }
             title="Radio Bolivia Joven"
+            type="outline"
             buttonStyle={{
-              backgroundColor: '#D3441C',
-              color: '',
+              backgroundColor: 'black',
               paddingHorizontal: DEVICE_WIDTH * 0.1,
               borderRadius: 10,
-              borderColor: 'white',
+              borderColor: '#4E869F',
               borderWidth: 1,
             }}
             titleStyle={{
+              color: '#4E869F',
               fontFamily: 'PFBeauSansPro-Regular',
               fontSize: 20,
-            }}
-            ViewComponent={LinearGradient} // Don't forget this!
-            linearGradientProps={{
-              colors: ['#1C5A7C', '#4E869F'],
-              start: {x: 0, y: 0.5},
-              end: {x: 1, y: 0.5},
             }}
             onPress={onPressRadio}
           />
@@ -122,34 +124,38 @@ const Selector = ({navigation}) => {
           <Button
             icon={
               <Icon
-                name="arrow-right"
-                size={12}
-                color="white"
+                name="youtube"
+                size={20}
+                color="#FEEE0D"
                 style={styles.icono}
               />
             }
-            title="QdShow"
+            title="QD SHOW"
+            type="outline"
             buttonStyle={{
-              backgroundColor: '#D3441C',
-              color: '',
+              backgroundColor: 'black',
               paddingHorizontal: DEVICE_WIDTH * 0.1,
               borderRadius: 10,
-              borderColor: 'white',
-              borderWidth: 0.5,
+              borderColor: '#FEEE0D',
+              borderWidth: 1,
             }}
             titleStyle={{
-              fontFamily: 'PFBeauSansPro-Black',
-              fontSize: 20,
-            }}
-            ViewComponent={LinearGradient} // Don't forget this!
-            linearGradientProps={{
-              colors: ['#2FFFE8', '#07040F'],
-              start: {x: 0, y: 0.5},
-              end: {x: 1, y: 0.5},
+              color: '#FEEE0D',
+              fontFamily: 'Smoolthan Regular',
+              fontSize: 19,
             }}
             onPress={onPressQd}
           />
         </View>
+        <Modal
+          isVisible={modal}
+          animationInTiming={800}
+          animationOutTiming={1000}
+          onBackdropPress={() => guardarModal(false)}>
+          <View style={styles.modal}>
+            <Text>I am the modal content!</Text>
+          </View>
+        </Modal>
       </ImageBackground>
     </View>
   );
@@ -187,6 +193,7 @@ const styles = StyleSheet.create({
     width: null,
     resizeMode: 'contain',
     height: DEVICE_HEIGHT * 0.1,
+    marginLeft: DEVICE_WIDTH * 0.05,
   },
   //------------------------------------
   seccion_1: {
@@ -213,6 +220,13 @@ const styles = StyleSheet.create({
   button: {},
   icono: {
     marginHorizontal: 5,
+  },
+  modal: {
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: DEVICE_HEIGHT * 0.7,
+    borderRadius: 10,
   },
 });
 export default Selector;

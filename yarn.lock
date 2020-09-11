@@ -1215,6 +1215,11 @@
   resolved "https://registry.yarnpkg.com/@rehooks/device-orientation/-/device-orientation-1.0.0.tgz#6265657a02cbdc7bbe2c349fd1ad4702d5f38038"
   integrity sha512-Sr+1FLT9VdRqc5o54+LcdhXaq+ZFVwJq/5GjIq47kQOfQIRWCLuQydbB0oHs7/Qbir6M4m83C4vzTRWj3y0vkQ==
 
+"@rnhooks/device-orientation@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@rnhooks/device-orientation/-/device-orientation-0.0.1.tgz#18b153c0b20d5929989e75ad3ef6cadd6568d5d6"
+  integrity sha512-70MgeOqSpm3/NvhFXOhAv4K2Q17/nK3cLS5H3XpjPatsbYGmVSY6HafJvm0FqFc2BQsshyiYtILycWrJUpbm0Q==
+
 "@sinonjs/commons@^1.7.0":
   version "1.8.1"
   resolved "https://registry.yarnpkg.com/@sinonjs/commons/-/commons-1.8.1.tgz#e7df00f98a203324f6dc7cc606cad9d4a8ab2217"
