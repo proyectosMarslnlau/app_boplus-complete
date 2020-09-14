@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 
 import {
   View,
@@ -23,11 +23,26 @@ import {SliderVolumeController} from 'react-native-volume-controller';
 import Carousel, {Pagination} from 'react-native-x2-carousel';
 //Importamos la libreria de GRADIENTES
 import LinearGradient from 'react-native-linear-gradient';
-
+//Imoprtamos el useContext
+import boplusContext from '../context/boplus/boplusContext';
 //------------------------------------------------------------
 //Inicio del programa
 //------------------------------------------------------------
 const Radio = () => {
+  const [imageradio, guardarimageradio] = useState();
+
+  //Creamo slos STATE DE consultas
+  const {funcionPeticionImagenRadio} = useContext(boplusContext);
+  useEffect(() => {
+    funcionPeticionImagenRadio().then((item) => {
+      if (item !== false) {
+        console.log(item);
+        guardarimageradio(item);
+      }
+    });
+  }, []);
+
+  //--------------------------------------
   const DATA = [
     {
       text: '#1',
@@ -55,8 +70,8 @@ const Radio = () => {
     },
   ];
   const renderItem = (data) => (
-    <View key={data.ima} style={styles.item}>
-      <Image style={styles.tinyLogo} source={{uri: data.ima}} />
+    <View key={data.id} style={styles.item}>
+      <Image style={styles.tinyLogo} source={{uri: data.direccion}} />
     </View>
   );
   //-----------------------------------------------------------
@@ -221,7 +236,7 @@ const Radio = () => {
         <Carousel
           pagination={Pagination}
           renderItem={renderItem}
-          data={DATA}
+          data={imageradio}
           autoplay={true}
           autoplayInterval={7000}
         />
