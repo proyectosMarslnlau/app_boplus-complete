@@ -1,37 +1,76 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 
-import {View, Text, StyleSheet, ImageBackground, Image} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ImageBackground,
+  Image,
+  BackHandler,
+} from 'react-native';
 //Importamos las medidas del APP
 import {DEVICE_WIDTH, DEVICE_HEIGHT} from '../resource/js/Device';
+
 //Importmaos las libreria de BOTONES de REACT NATIVE ELEMENTS
 import {Button} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
+//
+import alertContext from '../context/alert/alertContext';
 //Importamos la libreria de degradaciones
 import LinearGradient from 'react-native-linear-gradient';
 //Importamos la libreria de modal
 import Modal from 'react-native-modal';
+//Importamos
+import AlertError from '../item/AlertError';
+//----------------
+import {useNetInfo} from '@react-native-community/netinfo';
 //--------------------------------------------
 //Inicio del programa
 //--------------------------------------------
 const Selector = ({navigation}) => {
-  //-----------------------------
+  //
+  const {funcionAlertError} = useContext(alertContext);
+  //----------------------------- Verificacion de INTERNET
+  const netInfo = useNetInfo();
+
   //State LOCALES
   const [modal, guardarModal] = useState(false);
   //-------------------------------
   //Funcion direccion TV
   const onPressBoPlus = () => {
-    console.log('BOPLUS');
-    navigation.navigate('tv');
+    if (netInfo.isConnected) {
+      navigation.navigate('tv');
+    } else {
+      let valorError = {
+        estado: true,
+        mensaje: 'Sin acceso a Internet, Verifique su Conexion',
+      };
+      funcionAlertError(valorError);
+    }
   };
   //Funcion direccion Radio
   const onPressRadio = () => {
-    console.log('RADIO');
-    navigation.navigate('radio');
+    if (netInfo.isConnected) {
+      navigation.navigate('radio');
+    } else {
+      let valorError = {
+        estado: true,
+        mensaje: 'Sin acceso a Internet, Verifique su Conexion',
+      };
+      funcionAlertError(valorError);
+    }
   };
   //Funcion Direccion QD
   const onPressQd = () => {
-    console.log('QD');
-    navigation.navigate('qdshow');
+    if (netInfo.isConnected) {
+      navigation.navigate('qdshow');
+    } else {
+      let valorError = {
+        estado: true,
+        mensaje: 'Sin acceso a Internet, Verifique su Conexion',
+      };
+      funcionAlertError(valorError);
+    }
   };
   //Funcion CONTACTOS
   const onPressContact = () => {
@@ -157,6 +196,7 @@ const Selector = ({navigation}) => {
           </View>
         </Modal>
       </ImageBackground>
+      <AlertError />
     </View>
   );
 };

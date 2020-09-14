@@ -26,11 +26,20 @@ import {
 //--------------------------------------------
 //Importamos el Navigation de la app
 import Navigation from './src/navigation/Navigation';
+//-------------------------
+import BoplusState from './src/context/boplus/BoplusState';
+import AlertState from './src/context/alert/AlertState';
 //-------------------------------------------------
 //Inicio de PROGRAMA
 //------------------------------------------------
 const App = () => {
-  return <Navigation />;
+  return (
+    <BoplusState>
+      <AlertState>
+        <Navigation />
+      </AlertState>
+    </BoplusState>
+  );
 };
 
 const styles = StyleSheet.create({});

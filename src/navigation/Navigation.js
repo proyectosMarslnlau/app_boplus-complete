@@ -61,7 +61,10 @@ const Navigation = () => {
           component={Tv}
           options={{
             headerShown: false,
-            cardStyleInterpolator: forFade,
+            transitionSpec: {
+              open: config,
+              close: config,
+            },
           }}
         />
         <Stack.Screen
