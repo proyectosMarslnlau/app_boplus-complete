@@ -5,26 +5,34 @@ import {View, Text, StyleSheet, TouchableHighlight} from 'react-native';
 import Video from 'react-native-video';
 //Importamos la libreria de MEDIDAS
 import {DEVICE_WIDTH, DEVICE_HEIGHT} from '../resource/js/Device';
+//Importamos la orientacion de MOBILE
+import Orientation from 'react-native-orientation-locker';
+//Importamos la libreria de degradaciones
+import LinearGradient from 'react-native-linear-gradient';
+///----------------------------------------------------------------
 const Splash = ({navigation}) => {
   //------------------------
   //USE EFECT DE INCIO
   useEffect(() => {
+    Orientation.lockToPortrait();
     setTimeout(() => {
       navigation.navigate('selector');
     }, 9000);
   }, []);
-  const onPressSalir = () => {
-    navigation.navigate('selector');
-  };
+  //------------------------------------------
   return (
     <View style={styles.container}>
-      <Video
-        source={require('../resource/video/boplus2.mp4')} // Can be a URL or a local file.
-        //source={{uri: 'https://vjs.zencdn.net/v/oceans.mp4'}}
-        style={styles.video}
-        repeat={false}
-        resizeMode="stretch"
-      />
+      <LinearGradient
+        colors={['#090909', '#090909', '#452f20']}
+        style={styles.linearGradient}>
+        <Video
+          source={require('../resource/video/boplus2.mp4')} // Can be a URL or a local file.
+          //source={{uri: 'https://vjs.zencdn.net/v/oceans.mp4'}}
+          style={styles.video}
+          repeat={false}
+          resizeMode="stretch"
+        />
+      </LinearGradient>
     </View>
   );
 };
@@ -33,7 +41,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignSelf: 'stretch',
-    backgroundColor: 'black',
   },
   video: {
     position: 'absolute',

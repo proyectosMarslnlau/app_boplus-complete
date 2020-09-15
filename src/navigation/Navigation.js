@@ -80,7 +80,10 @@ const Navigation = () => {
           component={QdShow}
           options={{
             headerShown: false,
-            cardStyleInterpolator: forFade,
+            transitionSpec: {
+              open: config,
+              close: config,
+            },
           }}
         />
       </Stack.Navigator>

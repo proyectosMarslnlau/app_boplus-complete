@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 
 import {
   View,
@@ -7,6 +7,7 @@ import {
   ImageBackground,
   Image,
   BackHandler,
+  Alert,
 } from 'react-native';
 //Importamos las medidas del APP
 import {DEVICE_WIDTH, DEVICE_HEIGHT} from '../resource/js/Device';
@@ -28,13 +29,34 @@ import {useNetInfo} from '@react-native-community/netinfo';
 //Inicio del programa
 //--------------------------------------------
 const Selector = ({navigation}) => {
-  //
+  //Declaracion del STATE CONTEXT
   const {funcionAlertError} = useContext(alertContext);
-  //----------------------------- Verificacion de INTERNET
+  //---- Verificacion de INTERNET
   const netInfo = useNetInfo();
-
   //State LOCALES
   const [modal, guardarModal] = useState(false);
+  //------------------------------
+  useEffect(() => {
+    const backAction = () => {
+      Alert.alert('Salir', 'Esta seguro de Salir', [
+        {
+          text: 'Cancel',
+          onPress: () => null,
+          style: 'cancel',
+        },
+        {text: 'YES', onPress: () => BackHandler.exitApp()},
+      ]);
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+
+    return () => backHandler.remove();
+  }, []);
+
   //-------------------------------
   //Funcion direccion TV
   const onPressBoPlus = () => {

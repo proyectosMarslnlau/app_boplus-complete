@@ -7,35 +7,25 @@ import {DEVICE_WIDTH, DEVICE_HEIGHT} from '../resource/js/Device';
 import Carousel, {Pagination} from 'react-native-x2-carousel';
 //Importamos la lireria de degradados
 import LinearGradient from 'react-native-linear-gradient';
-//Importamos Boplus Context
+//Importamos el Context
 import boplusContext from '../context/boplus/boplusContext';
 //--------------------------------------------------------
 const DATA = [{text: '#1'}, {text: '#2'}, {text: '#3'}];
 
-const CasouselTv = () => {
-  //State Locales
-  const [imagetv, guardarImageTv] = useState();
-  //Funcion que renderiza al objeto
+const CasouselRadio = () => {
+  const [imageradio, guardarimageradio] = useState();
+
   //Creamo slos STATE DE consultas
-  const {funcionPeticionImagenTv} = useContext(boplusContext);
-  //
+  const {funcionPeticionImagenRadio} = useContext(boplusContext);
   useEffect(() => {
-    funcionPeticionImagenTv().then((item) => {
+    funcionPeticionImagenRadio().then((item) => {
       if (item !== false) {
         console.log(item);
-        guardarImageTv(item);
-      } else {
-        guardarImageTv([
-          {
-            id: '1',
-            titulo: 'default',
-            direccion: 'https://boplus.tv/img_apk/img_tv/boliviajovenlog.jpg',
-          },
-        ]);
+        guardarimageradio(item);
       }
     });
   }, []);
-  //---------------------------------
+  //Funcion que renderiza al objeto
   const renderItem = (data) => (
     <View key={data.id} style={styles.item}>
       <Image style={styles.tinyLogo} source={{uri: data.direccion}} />
@@ -50,7 +40,7 @@ const CasouselTv = () => {
           <Carousel
             pagination={Pagination}
             renderItem={renderItem}
-            data={imagetv}
+            data={imageradio}
             autoplay={true}
             loop={true}
             autoplayInterval={4000}
@@ -65,16 +55,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignSelf: 'stretch',
-    backgroundColor: 'red',
   },
   seccion_1: {
-    height: DEVICE_HEIGHT * 0.35,
+    height: DEVICE_HEIGHT * 0.25,
     alignItems: 'center',
     justifyContent: 'center',
   },
   item: {
     width: DEVICE_WIDTH,
-    height: DEVICE_HEIGHT * 0.35,
+    height: DEVICE_HEIGHT * 0.25,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#000',
@@ -82,7 +71,7 @@ const styles = StyleSheet.create({
   tinyLogo: {
     width: DEVICE_WIDTH,
     resizeMode: 'contain',
-    height: DEVICE_HEIGHT * 0.3,
+    height: DEVICE_HEIGHT * 0.23,
   },
 });
-export default CasouselTv;
+export default CasouselRadio;

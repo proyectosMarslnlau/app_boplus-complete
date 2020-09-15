@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Image,
   Linking,
+  BackHandler,
 } from 'react-native';
 //Importamos la medidas del dispositivo
 import {DEVICE_WIDTH, DEVICE_HEIGHT} from '../resource/js/Device';
@@ -19,66 +20,31 @@ import TrackPlayer, {
 } from 'react-native-track-player';
 //Importamos la libreria de AUDIO VOLUMEN
 import {SliderVolumeController} from 'react-native-volume-controller';
-//Importamos la libreria de CARROUSEL
-import Carousel, {Pagination} from 'react-native-x2-carousel';
 //Importamos la libreria de GRADIENTES
 import LinearGradient from 'react-native-linear-gradient';
-//Imoprtamos el useContext
-import boplusContext from '../context/boplus/boplusContext';
+//Importamos el Carousel de RADIO
+import CarouselRadio from '../item/CarouselRadio';
 //------------------------------------------------------------
 //Inicio del programa
 //------------------------------------------------------------
-const Radio = () => {
-  const [imageradio, guardarimageradio] = useState();
-
-  //Creamo slos STATE DE consultas
-  const {funcionPeticionImagenRadio} = useContext(boplusContext);
+const Radio = ({navigation}) => {
+  //Usamos los STATE LOCALES
   useEffect(() => {
-    funcionPeticionImagenRadio().then((item) => {
-      if (item !== false) {
-        console.log(item);
-        guardarimageradio(item);
-      }
-    });
-  }, []);
+    //Fucion que se usa para el boton de atras
+    const backAction = () => {
+      navigation.navigate('selector');
+      return true;
+    };
+    BackHandler.addEventListener('hardwareBackPress', backAction);
 
-  //--------------------------------------
-  const DATA = [
-    {
-      text: '#1',
-      id: '1',
-      ima: 'https://boplus.tv/img_apk/despiertos.png',
-      type: 'require("../resource/img/ddm.png")',
-    },
-    {
-      text: '#2',
-      id: '2',
-      ima: 'https://boplus.tv/img_apk/face.jpg',
-      type: 'require("../resource/img/geek.jpg")',
-    },
-    {
-      text: '#3',
-      id: '3',
-      ima: 'https://boplus.tv/img_apk/geek.jpg',
-      type: 'require("../resource/img/tdl.png")',
-    },
-    {
-      text: '#4',
-      id: '4',
-      ima: 'https://boplus.tv/img_apk/tdl2.png',
-      type: 'require("../resource/img/tdl.png")',
-    },
-  ];
-  const renderItem = (data) => (
-    <View key={data.id} style={styles.item}>
-      <Image style={styles.tinyLogo} source={{uri: data.direccion}} />
-    </View>
-  );
+    return () =>
+      BackHandler.removeEventListener('hardwareBackPress', backAction);
+  }, []);
   //-----------------------------------------------------------
   //INSTANCIAMOS LA RADIO
   //---------------------------------------------------------
   const playbackState = usePlaybackState();
-  const [estado, guardarEstado] = useState('stop');
+  const [estado, guardarEstado] = useState('Stop');
   //---------------------------------------------
   const config = async () => {
     await TrackPlayer.setupPlayer({});
@@ -105,11 +71,13 @@ const Radio = () => {
     });
 
     TrackPlayer.addEventListener('remote-stop', () => {
-      guardarEstado('stop');
+      guardarEstado('Stop');
       TrackPlayer.destroy();
     });
   };
   //---------------------------------------------------------------
+  //Configuracionde usuario INICIALES
+  ///--------------------------------------------------------------
   const toglePlay = async () => {
     const currentTrack = await TrackPlayer.getCurrentTrack();
 
@@ -139,7 +107,7 @@ const Radio = () => {
   //----------------------------------------------------------
   const onPress = async () => {
     try {
-      guardarEstado('stop');
+      guardarEstado('Stop');
       await TrackPlayer.stop();
       config();
       /*
@@ -181,24 +149,27 @@ const Radio = () => {
               style={styles.logo}
               source={require('../resource/img/qdshow2.png')}
             />
+            <Text style={styles.titulo_encabezado}>QD SHOW</Text>
           </View>
           <View style={styles.seccion_2_2}>
             <Image
               style={styles.logo}
               source={require('../resource/img/whatsapp.png')}
             />
+            <Text style={styles.titulo_encabezado}>Whatsapp</Text>
           </View>
           <View style={styles.seccion_2_3}>
             <Image
               style={styles.logo}
               source={require('../resource/img/facebook.png')}
             />
+            <Text style={styles.titulo_encabezado}>Facebook</Text>
           </View>
         </View>
       </LinearGradient>
       <View style={styles.seccion_3}>
         <View style={styles.seccion_3_1}>
-          <Text>{estado}</Text>
+          <Text style={styles.texto_reproduccion}>{estado}</Text>
           {estado !== 'play' ? (
             <TouchableOpacity onPress={onPress2} activeOpacity={0.9}>
               <Image
@@ -207,7 +178,7 @@ const Radio = () => {
               />
             </TouchableOpacity>
           ) : (
-            <TouchableOpacity onPress={onPress2} activeOpacity={0.1}>
+            <TouchableOpacity onPress={onPress} activeOpacity={0.1}>
               <Image
                 style={styles.boton_reproduccion}
                 source={require('../resource/img/stop.png')}
@@ -216,12 +187,14 @@ const Radio = () => {
           )}
         </View>
         <View style={styles.seccion_3_2}>
+          <Text style={styles.text_slider}> - Volumen +</Text>
           <SliderVolumeController
-            style={{width: 200, height: 40}}
+            style={styles.slider}
             minimumValue={0}
             maximumValue={1}
             minimumTrackTintColor="#FFFFFF"
             maximumTrackTintColor="#000000"
+            thumbTintColor="red"
             value={0.2}
           />
         </View>
@@ -233,13 +206,7 @@ const Radio = () => {
         />
       </View>
       <View style={styles.seccion_5}>
-        <Carousel
-          pagination={Pagination}
-          renderItem={renderItem}
-          data={imageradio}
-          autoplay={true}
-          autoplayInterval={7000}
-        />
+        <CarouselRadio />
       </View>
     </View>
   );
@@ -254,7 +221,6 @@ const styles = StyleSheet.create({
   //----------------------------------------
   seccion_1: {
     height: DEVICE_HEIGHT * 0.08,
-
     flexDirection: 'row',
   },
   seccion_1_1: {
@@ -289,11 +255,16 @@ const styles = StyleSheet.create({
     width: DEVICE_WIDTH * 0.3,
     justifyContent: 'center',
   },
-
+  titulo_encabezado: {
+    color: 'white',
+    marginLeft: DEVICE_WIDTH * 0.1,
+    marginTop: 5,
+    fontFamily: 'PFBeauSansPro-Regular',
+  },
   //----------------------------------------
   seccion_3: {
     height: DEVICE_HEIGHT * 0.25,
-    backgroundColor: 'yellow',
+    backgroundColor: 'black',
   },
   seccion_3_1: {
     height: DEVICE_HEIGHT * 0.2,
@@ -301,7 +272,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-
+  texto_reproduccion: {
+    fontSize: 20,
+    fontFamily: 'PFBeauSansPro-Black',
+    marginLeft: DEVICE_WIDTH * 0.05,
+  },
   boton_reproduccion: {
     width: DEVICE_WIDTH * 0.4,
     resizeMode: 'contain',
@@ -309,8 +284,20 @@ const styles = StyleSheet.create({
     marginLeft: DEVICE_WIDTH * 0.05,
   },
   seccion_3_2: {
+    flexDirection: 'row',
     height: DEVICE_HEIGHT * 0.05,
     backgroundColor: 'black',
+    alignItems: 'center',
+  },
+  text_slider: {
+    color: 'white',
+    fontFamily: 'PFBeauSansPro-BlackItalic',
+    fontSize: 18,
+    marginLeft: DEVICE_WIDTH * 0.05,
+  },
+  slider: {
+    width: DEVICE_WIDTH * 0.6,
+    height: DEVICE_HEIGHT * 0.1,
   },
   //------------------------------------------
   seccion_4: {
@@ -326,7 +313,7 @@ const styles = StyleSheet.create({
   seccion_5: {
     flex: 1,
     height: DEVICE_HEIGHT * 0.25,
-    backgroundColor: 'yellow',
+    backgroundColor: 'black',
     justifyContent: 'center',
     alignItems: 'center',
   },
