@@ -39,7 +39,6 @@ const QdShow = ({navigation}) => {
           <WebView
             javaScriptEnabled={true}
             domStorageEnabled={true}
-            allowsFullscreenVideo={true}
             source={{
               uri: 'https://www.youtube.com/embed/WFxc-RARg3k',
             }}
@@ -49,7 +48,6 @@ const QdShow = ({navigation}) => {
           <WebView
             javaScriptEnabled={true}
             domStorageEnabled={true}
-            allowsFullscreenVideo={true}
             source={{
               uri: 'https://www.youtube.com/embed/M_lkkSdBExM',
             }}

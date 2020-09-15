@@ -7,6 +7,7 @@ import {
   Image,
   BackHandler,
   ScrollView,
+  Dimensions,
 } from 'react-native';
 //--------------------
 import alertContext from '../context/alert/alertContext';
@@ -16,8 +17,6 @@ import useDeviceOrientation from '@rnhooks/device-orientation';
 import VideoPlayer from 'react-native-video-controls';
 //Importamos las medidas de RESOLUCION
 import {DEVICE_WIDTH, DEVICE_HEIGHT} from '../resource/js/Device';
-//Importamos el Carousel
-import CarouselTv from '../item/CarouselTv';
 //Importamos la libreria de GRADIENTES
 import LinearGradient from 'react-native-linear-gradient';
 //Importamos los ICONOS
@@ -43,6 +42,7 @@ const Tv = ({navigation}) => {
   //----------
   //Se pone en escucha el formato de ORIENTATION
   const deviceOrientation = useDeviceOrientation();
+
   //Usamos los STATE LOCALES
   //------------------------------------------------------
   //Creamos el USE EFFECT para la situacion de estados
