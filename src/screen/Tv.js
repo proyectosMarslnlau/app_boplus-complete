@@ -1,6 +1,13 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useState, useEffect, useContext, useRef} from 'react';
 
-import {View, Text, StyleSheet, Image, BackHandler} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  BackHandler,
+  ScrollView,
+} from 'react-native';
 //--------------------
 import alertContext from '../context/alert/alertContext';
 //Importamos la libreria de HOOKS
@@ -17,44 +24,26 @@ import LinearGradient from 'react-native-linear-gradient';
 import {Icon} from 'react-native-elements';
 //Importamos la orientacion de MOBILE
 import Orientation from 'react-native-orientation-locker';
+//import
+import boplusContext from '../context/boplus/boplusContext';
+//
+import {Button} from 'react-native-elements';
+
 //-----------------------------------------------------------------
 //Inicio de programa
 //------------------------------------------------------------------
 const Tv = ({navigation}) => {
-  //Usamos los STATE LOCALES
-  useEffect(() => {
-    //Funcion de Habilitacion de ORIENTACION segun el VIEW
-    Orientation.unlockAllOrientations();
-    //Fucion que se usa para el boton de atras
-    const backAction = () => {
-      Orientation.lockToPortrait();
-      navigation.navigate('selector');
-      return true;
-    };
-    BackHandler.addEventListener('hardwareBackPress', backAction);
+  //State Locales
+  const [imagetv, guardarImageTv] = useState([]);
 
-    return () =>
-      BackHandler.removeEventListener('hardwareBackPress', backAction);
-  }, []);
-  //---------------------------------------------------------------
-  const {funcionAlertError} = useContext(alertContext);
+  //----------------------------------
+  const {funcionPeticionImagenTv} = useContext(boplusContext);
+  //-----------------------------------
+  const scrollRef = useRef();
+  //----------
   //Se pone en escucha el formato de ORIENTATION
   const deviceOrientation = useDeviceOrientation();
-  //Creamos los STATE LOCALES
-  //Importamos useState estas son las medidas iniciales del VIDEO
-  const [medidas, guardarMedidas] = useState({
-    width: DEVICE_WIDTH,
-    height: DEVICE_HEIGHT * 0.5,
-  });
-  //-------------------------------------------------------
-  //Creasmos la funcion que se incluira en el video
-  //-------------------------------------------------------
-  const style_video = () => {
-    return {
-      width: medidas.width,
-      height: medidas.height,
-    };
-  };
+  //Usamos los STATE LOCALES
   //------------------------------------------------------
   //Creamos el USE EFFECT para la situacion de estados
   //------------------------------------------------------
@@ -71,6 +60,53 @@ const Tv = ({navigation}) => {
       });
     }
   }, [deviceOrientation]);
+  //-----------------------------------------------------------
+  useEffect(() => {
+    //
+    funcionPeticionImagenTv().then((item) => {
+      if (item !== false) {
+        guardarImageTv(item);
+      } else {
+        guardarImageTv([
+          {
+            id: '1',
+            titulo: 'default',
+            direccion: 'https://boplus.tv/img_apk/img_tv/boliviajovenlog.jpg',
+          },
+        ]);
+      }
+    });
+    //Funcion de Habilitacion de ORIENTACION segun el VIEW
+    Orientation.unlockAllOrientations();
+    //Fucion que se usa para el boton de atras
+    const backAction = () => {
+      Orientation.lockToPortrait();
+      navigation.navigate('selector');
+      return true;
+    };
+    BackHandler.addEventListener('hardwareBackPress', backAction);
+
+    return () =>
+      BackHandler.removeEventListener('hardwareBackPress', backAction);
+  }, []);
+  //---------------------------------------------------------------
+  const {funcionAlertError} = useContext(alertContext);
+
+  //Creamos los STATE LOCALES
+  //Importamos useState estas son las medidas iniciales del VIDEO
+  const [medidas, guardarMedidas] = useState({
+    width: DEVICE_WIDTH,
+    height: DEVICE_HEIGHT * 0.5,
+  });
+  //-------------------------------------------------------
+  //Creasmos la funcion que se incluira en el video
+  //-------------------------------------------------------
+  const style_video = () => {
+    return {
+      width: medidas.width,
+      height: medidas.height,
+    };
+  };
 
   console.log(deviceOrientation);
   //-------------
@@ -84,56 +120,70 @@ const Tv = ({navigation}) => {
     funcionAlertError(valorError);
     navigation.navigate('selector');
   };
+  //
+  const onPressView = () => {
+    scrollRef.current?.scrollTo({
+      y: 0,
+      animated: true,
+    });
+  };
   return (
     <View>
-      {deviceOrientation !== 'portrait' ? null : (
-        <LinearGradient
-          colors={['#090909', '#090909', '#452f20']}
-          style={styles.linearGradient}>
-          <View style={styles.seccion_0}>
-            <View style={styles.seccion_0_1}>
-              <Image
-                style={styles.logo}
-                source={require('../resource/img/logoFondoNegro.png')}
-              />
+      <ScrollView ref={scrollRef}>
+        {deviceOrientation !== 'portrait' ? null : (
+          <LinearGradient
+            colors={['#090909', '#090909', '#452f20']}
+            style={styles.linearGradient}>
+            <View style={styles.seccion_0}>
+              <View style={styles.seccion_0_1}>
+                <Image
+                  style={styles.logo}
+                  source={require('../resource/img/logoFondoNegro.png')}
+                />
+              </View>
+              <View style={styles.seccion_0_2}></View>
+              <View style={styles.seccion_0_3}></View>
             </View>
-            <View style={styles.seccion_0_2}></View>
-            <View style={styles.seccion_0_3}></View>
-          </View>
-        </LinearGradient>
-      )}
+          </LinearGradient>
+        )}
 
-      <View style={style_video()}>
-        <VideoPlayer
-          source={{
-            uri:
-              'https://ia800501.us.archive.org/11/items/popeye_i_dont_scare/popeye_i_dont_scare_512kb.mp4',
-          }}
-          //https://livestreamingperu.com:8081/boliviajoven/tracks-v1a1/mono.m3u8
-          //https://ia800501.us.archive.org/11/items/popeye_i_dont_scare/popeye_i_dont_scare_512kb.mp4
-          onError={loadErrorCarga}
-          disableBack
-          disableFullscreen
-          disableVolume
-          disableSeekbar
-          repeat={true}
-        />
-      </View>
-      <View style={styles.seccion_texto}>
-        <Text style={styles.texto_programacion}>
-          <Icon
-            name="description"
-            type="material"
-            color="#fff"
-            containerStyle={styles.icono}
-            size={18}
+        <View style={style_video()}>
+          <VideoPlayer
+            source={{
+              uri:
+                'https://livestreamingperu.com:8081/boliviajoven/tracks-v1a1/mono.m3u8',
+            }}
+            //https://livestreamingperu.com:8081/boliviajoven/tracks-v1a1/mono.m3u8
+            //https://ia800501.us.archive.org/11/items/popeye_i_dont_scare/popeye_i_dont_scare_512kb.mp4
+            onError={loadErrorCarga}
+            disableBack
+            disableFullscreen
+            disableVolume
+            disableSeekbar
+            repeat={true}
           />
-          Nuestra Programación
-        </Text>
-      </View>
-      <View style={styles.seccion_2}>
-        <CarouselTv />
-      </View>
+        </View>
+        <View style={styles.seccion_texto}>
+          <Text style={styles.texto_programacion}>
+            <Icon
+              name="description"
+              type="material"
+              color="#fff"
+              containerStyle={styles.icono}
+              size={18}
+            />
+            Nuestra Programación
+          </Text>
+        </View>
+        {imagetv.map((item) => (
+          <View style={styles.seccion_2} key={item.id}>
+            <Image style={styles.tinyLogo} source={{uri: item.direccion}} />
+          </View>
+        ))}
+        <View>
+          <Button title="Solid Button" onPress={onPressView} />
+        </View>
+      </ScrollView>
     </View>
   );
 };
@@ -185,8 +235,13 @@ const styles = StyleSheet.create({
   icono: {},
   //-----------------------------------
   seccion_2: {
-    backgroundColor: 'green',
+    backgroundColor: 'black',
     width: DEVICE_WIDTH,
+    height: DEVICE_HEIGHT * 0.35,
+  },
+  tinyLogo: {
+    width: DEVICE_WIDTH,
+    resizeMode: 'contain',
     height: DEVICE_HEIGHT * 0.35,
   },
 });

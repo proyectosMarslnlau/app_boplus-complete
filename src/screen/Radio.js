@@ -31,7 +31,10 @@ const Radio = ({navigation}) => {
   //Usamos los STATE LOCALES
   useEffect(() => {
     //Fucion que se usa para el boton de atras
-    const backAction = () => {
+    const backAction = async () => {
+      guardarEstado('Stop');
+      await TrackPlayer.stop();
+      config();
       navigation.navigate('selector');
       return true;
     };
@@ -58,6 +61,7 @@ const Radio = ({navigation}) => {
       compactCapabilities: [
         TrackPlayer.CAPABILITY_PLAY,
         TrackPlayer.CAPABILITY_PAUSE,
+        TrackPlayer.CAPABILITY_STOP,
       ],
     });
     TrackPlayer.addEventListener('remote-play', (event) => {
@@ -79,20 +83,22 @@ const Radio = ({navigation}) => {
   //Configuracionde usuario INICIALES
   ///--------------------------------------------------------------
   const toglePlay = async () => {
+    //http://streamingv2.shoutcast.com/japanimradio-fm
     const currentTrack = await TrackPlayer.getCurrentTrack();
-
+    config();
     if (currentTrack == null) {
       await TrackPlayer.reset();
       await TrackPlayer.add({
         id: 'local-track',
-        url: 'http://streamingv2.shoutcast.com/japanimradio-fm',
+        url: 'https://conectperu.com/8134/stream',
         title: 'BOLIVIA JOVEN',
         artist: 'Radio',
-        artwork: 'https://picsum.photos/id/500/200/300',
+        artwork: 'https://boplus.tv/img_apk/img_tv/boplusprincipal.jpg',
         duration: 28,
       });
       guardarEstado('play');
       await TrackPlayer.play();
+      //config();
     } else {
       if (playbackState === TrackPlayer.STATE_PAUSED) {
         guardarEstado('play');
@@ -195,7 +201,7 @@ const Radio = ({navigation}) => {
             minimumTrackTintColor="#FFFFFF"
             maximumTrackTintColor="#000000"
             thumbTintColor="red"
-            value={0.2}
+            value={0.8}
           />
         </View>
       </View>
