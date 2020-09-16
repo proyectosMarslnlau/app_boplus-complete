@@ -16,9 +16,9 @@ const CasouselAnuncio = () => {
   const [imageanuncio, guardarImageAnuncio] = useState();
 
   //Creamo slos STATE DE consultas
-  const {funcionPeticionImagenRadio} = useContext(boplusContext);
+  const {funcionPeticionImagenPublicidad} = useContext(boplusContext);
   useEffect(() => {
-    funcionPeticionImagenRadio().then((item) => {
+    funcionPeticionImagenPublicidad().then((item) => {
       if (item !== false) {
         console.log(item);
         guardarImageAnuncio(item);
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
   tinyLogo: {
     width: DEVICE_WIDTH,
     resizeMode: 'contain',
-    height: DEVICE_HEIGHT * 0.23,
+    height: DEVICE_HEIGHT * 0.25,
   },
 });
 export default CasouselAnuncio;

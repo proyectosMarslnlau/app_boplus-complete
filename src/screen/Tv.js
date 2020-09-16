@@ -151,7 +151,7 @@ const Tv = ({navigation}) => {
           <VideoPlayer
             source={{
               uri:
-                'https://livestreamingperu.com:8081/boliviajoven/tracks-v1a1/mono.m3u8',
+                'https://ia800501.us.archive.org/11/items/popeye_i_dont_scare/popeye_i_dont_scare_512kb.mp4',
             }}
             //https://livestreamingperu.com:8081/boliviajoven/tracks-v1a1/mono.m3u8
             //https://ia800501.us.archive.org/11/items/popeye_i_dont_scare/popeye_i_dont_scare_512kb.mp4

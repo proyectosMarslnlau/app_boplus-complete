@@ -53,10 +53,10 @@ const BoplusState = (props) => {
     }
   };
   //
-  const funcionPeticionPublicidad = async () => {
+  const funcionPeticionImagenPublicidad = async () => {
     try {
       const urlImagenRadio =
-        'https://boplus.tv/api/siteWeb/request/peticionInformacionTv.php';
+        'https://boplus.tv/api/siteWeb/request/peticionInformacionPublicidad.php';
       const peticion = await axios.get(urlImagenRadio);
       const respuestaImagenTv = peticion.data;
       console.log(respuestaImagenTv.length);
@@ -79,7 +79,7 @@ const BoplusState = (props) => {
         imagenespublicidad: state.imagenespublicidad,
         funcionPeticionImagenRadio,
         funcionPeticionImagenTv,
-        funcionPeticionPublicidad,
+        funcionPeticionImagenPublicidad,
       }}>
       {props.children}
     </boplusContext.Provider>

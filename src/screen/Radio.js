@@ -9,6 +9,7 @@ import {
   Image,
   Linking,
   BackHandler,
+  ScrollView,
 } from 'react-native';
 //Importamos la medidas del dispositivo
 import {DEVICE_WIDTH, DEVICE_HEIGHT} from '../resource/js/Device';
@@ -138,8 +139,8 @@ const Radio = ({navigation}) => {
         <View style={styles.seccion_1}>
           <View style={styles.seccion_1_1}>
             <Image
-              style={styles.logo}
-              source={require('../resource/img/logoFondoNegro.png')}
+              style={styles.logo_radio}
+              source={require('../resource/img/boplusRadio.png')}
             />
           </View>
           <View style={styles.seccion_1_2}></View>
@@ -212,7 +213,29 @@ const Radio = ({navigation}) => {
         />
       </View>
       <View style={styles.seccion_5}>
-        <CarouselRadio />
+        <ScrollView>
+          <Text style={styles.texto_prueba}>mudo cambios de los demas </Text>
+          <Text style={styles.texto_prueba}>mudo cambios de los demas </Text>
+          <Text style={styles.texto_prueba}>mudo cambios de los demas </Text>
+          <Text style={styles.texto_prueba}>mudo cambios de los demas </Text>
+          <Text style={styles.texto_prueba}>mudo cambios de los demas </Text>
+          <Text style={styles.texto_prueba}>mudo cambios de los demas </Text>
+          <Text style={styles.texto_prueba}>mudo cambios de los demas </Text>
+          <Text style={styles.texto_prueba}>mudo cambios de los demas </Text>
+          <Text style={styles.texto_prueba}>mudo cambios de los demas </Text>
+          <Text style={styles.texto_prueba}>mudo cambios de los demas </Text>
+          <Text style={styles.texto_prueba}>mudo cambios de los demas </Text>
+          <Text style={styles.texto_prueba}>mudo cambios de los demas </Text>
+          <Text style={styles.texto_prueba}>mudo cambios de los demas </Text>
+          <Text style={styles.texto_prueba}>mudo cambios de los demas </Text>
+          <Text style={styles.texto_prueba}>mudo cambios de los demas </Text>
+          <Text style={styles.texto_prueba}>mudo cambios de los demas </Text>
+          <Text style={styles.texto_prueba}>mudo cambios de los demas </Text>
+          <Text style={styles.texto_prueba}>mudo cambios de los demas </Text>
+          <Text style={styles.texto_prueba}>mudo cambios de los demas </Text>
+          <Text style={styles.texto_prueba}>mudo cambios de los demas </Text>
+          <Text style={styles.texto_prueba}>mudo cambios de los demas </Text>
+        </ScrollView>
       </View>
     </View>
   );
@@ -243,6 +266,12 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     height: DEVICE_HEIGHT * 0.1,
     marginLeft: DEVICE_WIDTH * 0.05,
+  },
+  logo_radio: {
+    width: DEVICE_WIDTH * 0.5,
+    resizeMode: 'contain',
+    height: DEVICE_HEIGHT * 0.1,
+    marginLeft: DEVICE_WIDTH * 0.04,
   },
   //----------------------------------------
   seccion_2: {
@@ -339,6 +368,9 @@ const styles = StyleSheet.create({
     width: DEVICE_WIDTH,
     resizeMode: 'contain',
     height: DEVICE_HEIGHT * 0.23,
+  },
+  texto_prueba: {
+    color: 'white',
   },
 });
 export default Radio;
