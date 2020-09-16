@@ -11,6 +11,7 @@ const BoplusState = (props) => {
   const initialState = {
     imagenesradio: null,
     imagenestv: null,
+    imagenespublicidad: null,
   };
   const [state, dispatch] = useReducer(boplusReducer, initialState);
   //
@@ -51,13 +52,34 @@ const BoplusState = (props) => {
       console.log(error);
     }
   };
+  //
+  const funcionPeticionPublicidad = async () => {
+    try {
+      const urlImagenRadio =
+        'https://boplus.tv/api/siteWeb/request/peticionInformacionTv.php';
+      const peticion = await axios.get(urlImagenRadio);
+      const respuestaImagenTv = peticion.data;
+      console.log(respuestaImagenTv.length);
+
+      if (respuestaImagenTv.length !== 0) {
+        //Retornamos el ARREGLO con la informacion
+        return respuestaImagenTv;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <boplusContext.Provider
       value={{
         imagenesradio: state.imagenesradio,
         imagenestv: state.imagenestv,
+        imagenespublicidad: state.imagenespublicidad,
         funcionPeticionImagenRadio,
         funcionPeticionImagenTv,
+        funcionPeticionPublicidad,
       }}>
       {props.children}
     </boplusContext.Provider>

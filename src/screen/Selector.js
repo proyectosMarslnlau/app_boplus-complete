@@ -17,8 +17,8 @@ import {Button} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 //
 import alertContext from '../context/alert/alertContext';
-//Importamos la libreria de degradaciones
-import LinearGradient from 'react-native-linear-gradient';
+//
+import CarouselAnuncio from '../item/CarouselAnuncio';
 //Importamos la libreria de modal
 import Modal from 'react-native-modal';
 //Importamos
@@ -208,6 +208,9 @@ const Selector = ({navigation}) => {
             onPress={onPressQd}
           />
         </View>
+        <View style={styles.seccion_4}>
+          <CarouselAnuncio />
+        </View>
         <Modal
           isVisible={modal}
           animationInTiming={800}
@@ -247,7 +250,6 @@ const styles = StyleSheet.create({
   },
   seccion_0_3: {
     width: DEVICE_WIDTH * 0.3,
-
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -260,23 +262,27 @@ const styles = StyleSheet.create({
   //------------------------------------
   seccion_1: {
     alignItems: 'center',
-    justifyContent: 'center',
-
-    height: DEVICE_HEIGHT * 0.3,
+    justifyContent: 'flex-end',
+    height: DEVICE_HEIGHT * 0.25,
   },
   //-------------------------------------
   seccion_2: {
     alignItems: 'center',
     justifyContent: 'center',
 
-    height: DEVICE_HEIGHT * 0.3,
+    height: DEVICE_HEIGHT * 0.25,
   },
   //--------------------------------------
   seccion_3: {
     alignItems: 'center',
+    justifyContent: 'flex-start',
+    height: DEVICE_HEIGHT * 0.25,
+  },
+  //----------------------------------------
+  seccion_4: {
+    alignItems: 'center',
     justifyContent: 'center',
-
-    height: DEVICE_HEIGHT * 0.3,
+    height: DEVICE_HEIGHT * 0.25,
   },
   //----------------------------------------
   button: {},
