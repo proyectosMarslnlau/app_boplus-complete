@@ -36,7 +36,7 @@ const Tv = ({navigation}) => {
   const [imagetv, guardarImageTv] = useState([]);
 
   //----------------------------------
-  const {funcionPeticionImagenTv} = useContext(boplusContext);
+  const {imagenestv, funcionPeticionImagenTv} = useContext(boplusContext);
   //-----------------------------------
   const scrollRef = useRef();
   //----------
@@ -63,19 +63,7 @@ const Tv = ({navigation}) => {
   //-----------------------------------------------------------
   useEffect(() => {
     //
-    funcionPeticionImagenTv().then((item) => {
-      if (item !== false) {
-        guardarImageTv(item);
-      } else {
-        guardarImageTv([
-          {
-            id: '1',
-            titulo: 'default',
-            direccion: 'https://boplus.tv/img_apk/img_tv/boliviajovenlog.jpg',
-          },
-        ]);
-      }
-    });
+    funcionPeticionImagenTv();
     //Funcion de Habilitacion de ORIENTACION segun el VIEW
     Orientation.unlockAllOrientations();
     //Fucion que se usa para el boton de atras
@@ -122,10 +110,12 @@ const Tv = ({navigation}) => {
   };
   //
   const onPressView = () => {
+    navigation.navigate('jumptv');
+    /*
     scrollRef.current?.scrollTo({
       y: 0,
       animated: true,
-    });
+    });*/
   };
   return (
     <View>
@@ -171,15 +161,12 @@ const Tv = ({navigation}) => {
               color="#fff"
               containerStyle={styles.icono}
               size={18}
+              repeat={true}
             />
             Nuestra Programación
           </Text>
         </View>
-        {imagetv.map((item) => (
-          <View style={styles.seccion_2} key={item.id}>
-            <Image style={styles.tinyLogo} source={{uri: item.direccion}} />
-          </View>
-        ))}
+
         <View>
           <Button title="Solid Button" onPress={onPressView} />
         </View>

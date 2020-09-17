@@ -5,12 +5,12 @@ import boplusReducer from './boplusReducer';
 //Importamos la libreria AXIOS
 import axios from 'axios';
 //import TYPES
-import {PETICION_IMAGENES_RADIO} from '../../type/index';
+import {PETICION_IMAGENES_TV} from '../../type/index';
 //-----------------------------------------------------
 const BoplusState = (props) => {
   const initialState = {
     imagenesradio: null,
-    imagenestv: null,
+    imagenestv: [],
     imagenespublicidad: null,
   };
   const [state, dispatch] = useReducer(boplusReducer, initialState);
@@ -44,6 +44,10 @@ const BoplusState = (props) => {
 
       if (respuestaImagenTv.length !== 0) {
         //Retornamos el ARREGLO con la informacion
+        dispatch({
+          type: PETICION_IMAGENES_TV,
+          payload: respuestaImagenTv,
+        });
         return respuestaImagenTv;
       } else {
         return false;

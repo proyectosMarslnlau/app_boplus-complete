@@ -61,7 +61,7 @@ const Selector = ({navigation}) => {
   //Funcion direccion TV
   const onPressBoPlus = () => {
     if (netInfo.isConnected) {
-      navigation.navigate('tv');
+      navigation.push('tv');
     } else {
       let valorError = {
         estado: true,
