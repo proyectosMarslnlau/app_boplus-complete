@@ -151,13 +151,6 @@ const Radio = ({navigation}) => {
         colors={['#452f20', '#090909', '#090909']}
         style={styles.linearGradient}>
         <View style={styles.seccion_2}>
-          <View style={styles.seccion_2_1}>
-            <Image
-              style={styles.logo}
-              source={require('../resource/img/qdshow2.png')}
-            />
-            <Text style={styles.titulo_encabezado}>QD SHOW</Text>
-          </View>
           <View style={styles.seccion_2_2}>
             <Image
               style={styles.logo}
@@ -279,17 +272,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   seccion_2_1: {
-    width: DEVICE_WIDTH * 0.3,
+    width: DEVICE_WIDTH * 0.5,
     justifyContent: 'center',
   },
   seccion_2_2: {
-    width: DEVICE_WIDTH * 0.3,
+    width: DEVICE_WIDTH * 0.5,
     justifyContent: 'center',
   },
-  seccion_2_3: {
-    width: DEVICE_WIDTH * 0.3,
-    justifyContent: 'center',
-  },
+
   titulo_encabezado: {
     color: 'white',
     marginLeft: DEVICE_WIDTH * 0.1,

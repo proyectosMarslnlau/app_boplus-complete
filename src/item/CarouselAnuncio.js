@@ -13,17 +13,16 @@ import boplusContext from '../context/boplus/boplusContext';
 const DATA = [{text: '#1'}, {text: '#2'}, {text: '#3'}];
 
 const CasouselAnuncio = () => {
-  const [imageanuncio, guardarImageAnuncio] = useState();
+  //State Locales
 
   //Creamo slos STATE DE consultas
-  const {funcionPeticionImagenPublicidad} = useContext(boplusContext);
+  const {imagenespublicidad, funcionPeticionImagenPublicidad} = useContext(
+    boplusContext,
+  );
+  //
   useEffect(() => {
-    funcionPeticionImagenPublicidad().then((item) => {
-      if (item !== false) {
-        console.log(item);
-        guardarImageAnuncio(item);
-      }
-    });
+    //Invocamos la funcion que nos devuelven las imagenes subidas
+    funcionPeticionImagenPublicidad();
   }, []);
   //Funcion que renderiza al objeto
   const renderItem = (data) => (
@@ -40,7 +39,7 @@ const CasouselAnuncio = () => {
           <Carousel
             pagination={Pagination}
             renderItem={renderItem}
-            data={imageanuncio}
+            data={imagenespublicidad}
             autoplay={true}
             loop={true}
             autoplayInterval={4000}

@@ -5,13 +5,16 @@ import boplusReducer from './boplusReducer';
 //Importamos la libreria AXIOS
 import axios from 'axios';
 //import TYPES
-import {PETICION_IMAGENES_TV} from '../../type/index';
+import {
+  PETICION_IMAGENES_TV,
+  PETICION_IMAGENES_ANUNCIO,
+} from '../../type/index';
 //-----------------------------------------------------
 const BoplusState = (props) => {
   const initialState = {
     imagenesradio: null,
     imagenestv: [],
-    imagenespublicidad: null,
+    imagenespublicidad: [],
   };
   const [state, dispatch] = useReducer(boplusReducer, initialState);
   //
@@ -41,6 +44,7 @@ const BoplusState = (props) => {
       const peticion = await axios.get(urlImagenRadio);
       const respuestaImagenTv = peticion.data;
       console.log(respuestaImagenTv.length);
+      console.log('LENNY ');
 
       if (respuestaImagenTv.length !== 0) {
         //Retornamos el ARREGLO con la informacion
@@ -48,7 +52,6 @@ const BoplusState = (props) => {
           type: PETICION_IMAGENES_TV,
           payload: respuestaImagenTv,
         });
-        return respuestaImagenTv;
       } else {
         return false;
       }
@@ -64,10 +67,12 @@ const BoplusState = (props) => {
       const peticion = await axios.get(urlImagenRadio);
       const respuestaImagenTv = peticion.data;
       console.log(respuestaImagenTv.length);
-
+      console.log('LENNY ');
       if (respuestaImagenTv.length !== 0) {
-        //Retornamos el ARREGLO con la informacion
-        return respuestaImagenTv;
+        dispatch({
+          type: PETICION_IMAGENES_ANUNCIO,
+          payload: respuestaImagenTv,
+        });
       } else {
         return false;
       }

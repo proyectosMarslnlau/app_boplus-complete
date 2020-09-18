@@ -13,7 +13,7 @@ import Radio from '../screen/Radio';
 import Selector from '../screen/Selector';
 import Splash from '../screen/Splash';
 import Tv from '../screen/Tv';
-import JumpTv from '../screen/jump/JumpTv';
+import Programacion from '../screen/Programacion';
 //
 //Creamos el navigation
 const Stack = createStackNavigator();
@@ -59,16 +59,19 @@ const Navigation = () => {
           }}
         />
         <Stack.Screen
-          name="tv"
-          component={Tv}
+          name="programacion"
+          component={Programacion}
           options={{
             headerShown: false,
-            cardStyleInterpolator: forFade,
+            transitionSpec: {
+              open: config,
+              close: config,
+            },
           }}
         />
         <Stack.Screen
-          name="jumptv"
-          component={JumpTv}
+          name="tv"
+          component={Tv}
           options={{
             headerShown: false,
             cardStyleInterpolator: forFade,

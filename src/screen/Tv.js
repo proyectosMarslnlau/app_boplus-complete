@@ -63,13 +63,12 @@ const Tv = ({navigation}) => {
   //-----------------------------------------------------------
   useEffect(() => {
     //
-    funcionPeticionImagenTv();
     //Funcion de Habilitacion de ORIENTACION segun el VIEW
     Orientation.unlockAllOrientations();
     //Fucion que se usa para el boton de atras
     const backAction = () => {
       Orientation.lockToPortrait();
-      navigation.navigate('selector');
+      navigation.navigate('programacion');
       return true;
     };
     BackHandler.addEventListener('hardwareBackPress', backAction);

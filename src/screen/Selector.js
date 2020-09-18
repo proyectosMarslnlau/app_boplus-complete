@@ -1,5 +1,5 @@
 import React, {useState, useContext, useEffect} from 'react';
-
+//Importaciones de REACT NATIVE
 import {
   View,
   Text,
@@ -11,19 +11,18 @@ import {
 } from 'react-native';
 //Importamos las medidas del APP
 import {DEVICE_WIDTH, DEVICE_HEIGHT} from '../resource/js/Device';
-
 //Importmaos las libreria de BOTONES de REACT NATIVE ELEMENTS
 import {Button} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
-//
+//Context Alert
 import alertContext from '../context/alert/alertContext';
-//
+//Carousel de Anuncio CAMBIAR
 import CarouselAnuncio from '../item/CarouselAnuncio';
 //Importamos la libreria de modal
 import Modal from 'react-native-modal';
-//Importamos
+//Importamos Componente de ALERT
 import AlertError from '../item/AlertError';
-//----------------
+//Importamos libreria de INTERNET
 import {useNetInfo} from '@react-native-community/netinfo';
 //--------------------------------------------
 //Inicio del programa
@@ -36,7 +35,10 @@ const Selector = ({navigation}) => {
   //State LOCALES
   const [modal, guardarModal] = useState(false);
   //------------------------------
+  // USE EFFECT DE INICIO
+  //-----------------------------
   useEffect(() => {
+    //Funcion del boton de atras BACK
     const backAction = () => {
       Alert.alert('Salir', 'Esta seguro de Salir', [
         {
@@ -61,7 +63,7 @@ const Selector = ({navigation}) => {
   //Funcion direccion TV
   const onPressBoPlus = () => {
     if (netInfo.isConnected) {
-      navigation.push('tv');
+      navigation.navigate('programacion');
     } else {
       let valorError = {
         estado: true,
@@ -70,6 +72,7 @@ const Selector = ({navigation}) => {
       funcionAlertError(valorError);
     }
   };
+  //-------------------------------
   //Funcion direccion Radio
   const onPressRadio = () => {
     if (netInfo.isConnected) {
@@ -82,6 +85,7 @@ const Selector = ({navigation}) => {
       funcionAlertError(valorError);
     }
   };
+  //-------------------------------
   //Funcion Direccion QD
   const onPressQd = () => {
     if (netInfo.isConnected) {
@@ -94,13 +98,14 @@ const Selector = ({navigation}) => {
       funcionAlertError(valorError);
     }
   };
+  //-------------------------------
   //Funcion CONTACTOS
   const onPressContact = () => {
     console.log('PRESIONO EL CONTACTO');
     guardarModal(true);
   };
   //--------------------------------------------------------
-  // Cambios
+  // Programa SELECTOR
   //----------------------------------------------------------
   return (
     <View style={styles.container}>
@@ -114,9 +119,7 @@ const Selector = ({navigation}) => {
               source={require('../resource/img/logoFondoNegro.png')}
             />
           </View>
-          <View style={styles.seccion_0_2}>
-            <Text>12</Text>
-          </View>
+          <View style={styles.seccion_0_2}></View>
           <View style={styles.seccion_0_3}>
             <Button
               title="Contactos"
@@ -164,7 +167,7 @@ const Selector = ({navigation}) => {
                 style={styles.icono}
               />
             }
-            title="Radio Bolivia Joven"
+            title="BoPlus Radio"
             type="outline"
             buttonStyle={{
               backgroundColor: 'black',
@@ -175,7 +178,7 @@ const Selector = ({navigation}) => {
             }}
             titleStyle={{
               color: '#4E869F',
-              fontFamily: 'PFBeauSansPro-Regular',
+              fontFamily: 'PFBeauSansPro-Black',
               fontSize: 20,
             }}
             onPress={onPressRadio}
@@ -217,7 +220,7 @@ const Selector = ({navigation}) => {
           animationOutTiming={1000}
           onBackdropPress={() => guardarModal(false)}>
           <View style={styles.modal}>
-            <Text>I am the modal content!</Text>
+            <Text>MARSLNLAU</Text>
           </View>
         </Modal>
       </ImageBackground>
@@ -238,12 +241,13 @@ const styles = StyleSheet.create({
   },
   //----------------------------------
   seccion_0: {
-    height: DEVICE_HEIGHT * 0.1,
+    height: DEVICE_HEIGHT * 0.15,
     flex: 1,
     flexDirection: 'row',
   },
   seccion_0_1: {
     width: DEVICE_WIDTH * 0.4,
+    justifyContent: 'center',
   },
   seccion_0_2: {
     width: DEVICE_WIDTH * 0.3,
@@ -263,20 +267,20 @@ const styles = StyleSheet.create({
   seccion_1: {
     alignItems: 'center',
     justifyContent: 'flex-end',
-    height: DEVICE_HEIGHT * 0.25,
+    height: DEVICE_HEIGHT * 0.2,
   },
   //-------------------------------------
   seccion_2: {
     alignItems: 'center',
     justifyContent: 'center',
 
-    height: DEVICE_HEIGHT * 0.25,
+    height: DEVICE_HEIGHT * 0.2,
   },
   //--------------------------------------
   seccion_3: {
     alignItems: 'center',
     justifyContent: 'flex-start',
-    height: DEVICE_HEIGHT * 0.25,
+    height: DEVICE_HEIGHT * 0.2,
   },
   //----------------------------------------
   seccion_4: {
