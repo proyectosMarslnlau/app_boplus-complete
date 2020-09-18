@@ -48,10 +48,7 @@ const BoplusState = (props) => {
 
       if (respuestaImagenTv.length !== 0) {
         //Retornamos el ARREGLO con la informacion
-        dispatch({
-          type: PETICION_IMAGENES_TV,
-          payload: respuestaImagenTv,
-        });
+        return respuestaImagenTv;
       } else {
         return false;
       }

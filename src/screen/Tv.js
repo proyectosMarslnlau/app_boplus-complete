@@ -63,6 +63,7 @@ const Tv = ({navigation}) => {
   //-----------------------------------------------------------
   useEffect(() => {
     //
+    funcionPeticionImagenTv();
     //Funcion de Habilitacion de ORIENTACION segun el VIEW
     Orientation.unlockAllOrientations();
     //Fucion que se usa para el boton de atras

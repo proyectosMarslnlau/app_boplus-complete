@@ -206,29 +206,7 @@ const Radio = ({navigation}) => {
         />
       </View>
       <View style={styles.seccion_5}>
-        <ScrollView>
-          <Text style={styles.texto_prueba}>mudo cambios de los demas </Text>
-          <Text style={styles.texto_prueba}>mudo cambios de los demas </Text>
-          <Text style={styles.texto_prueba}>mudo cambios de los demas </Text>
-          <Text style={styles.texto_prueba}>mudo cambios de los demas </Text>
-          <Text style={styles.texto_prueba}>mudo cambios de los demas </Text>
-          <Text style={styles.texto_prueba}>mudo cambios de los demas </Text>
-          <Text style={styles.texto_prueba}>mudo cambios de los demas </Text>
-          <Text style={styles.texto_prueba}>mudo cambios de los demas </Text>
-          <Text style={styles.texto_prueba}>mudo cambios de los demas </Text>
-          <Text style={styles.texto_prueba}>mudo cambios de los demas </Text>
-          <Text style={styles.texto_prueba}>mudo cambios de los demas </Text>
-          <Text style={styles.texto_prueba}>mudo cambios de los demas </Text>
-          <Text style={styles.texto_prueba}>mudo cambios de los demas </Text>
-          <Text style={styles.texto_prueba}>mudo cambios de los demas </Text>
-          <Text style={styles.texto_prueba}>mudo cambios de los demas </Text>
-          <Text style={styles.texto_prueba}>mudo cambios de los demas </Text>
-          <Text style={styles.texto_prueba}>mudo cambios de los demas </Text>
-          <Text style={styles.texto_prueba}>mudo cambios de los demas </Text>
-          <Text style={styles.texto_prueba}>mudo cambios de los demas </Text>
-          <Text style={styles.texto_prueba}>mudo cambios de los demas </Text>
-          <Text style={styles.texto_prueba}>mudo cambios de los demas </Text>
-        </ScrollView>
+        <CarouselRadio />
       </View>
     </View>
   );

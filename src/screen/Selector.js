@@ -18,6 +18,8 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import alertContext from '../context/alert/alertContext';
 //Carousel de Anuncio CAMBIAR
 import CarouselAnuncio from '../item/CarouselAnuncio';
+import CarouselTv from '../item/CarouselTv';
+import CarouselRadio from '../item/CarouselRadio';
 //Importamos la libreria de modal
 import Modal from 'react-native-modal';
 //Importamos Componente de ALERT
@@ -212,7 +214,7 @@ const Selector = ({navigation}) => {
           />
         </View>
         <View style={styles.seccion_4}>
-          <CarouselAnuncio />
+          <CarouselTv />
         </View>
         <Modal
           isVisible={modal}

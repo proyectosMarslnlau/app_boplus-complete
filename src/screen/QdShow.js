@@ -11,6 +11,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import useDeviceOrientation from '@rnhooks/device-orientation';
 //Importamos la orientacion de MOBILE
 import Orientation from 'react-native-orientation-locker';
+import CarouselTv from '../item/CarouselTv';
 //-------------------------------
 const QdShow = ({navigation}) => {
   //Se pone en escucha el formato de ORIENTATION
@@ -44,15 +45,7 @@ const QdShow = ({navigation}) => {
             }}
           />
         </View>
-        <View style={styles.video}>
-          <WebView
-            javaScriptEnabled={true}
-            domStorageEnabled={true}
-            source={{
-              uri: 'https://www.youtube.com/embed/M_lkkSdBExM',
-            }}
-          />
-        </View>
+        <CarouselTv />
       </LinearGradient>
     </View>
   );

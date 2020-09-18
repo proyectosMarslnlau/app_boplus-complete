@@ -24,19 +24,11 @@ const CasouselTv = () => {
       if (item !== false) {
         console.log(item);
         guardarImageTv(item);
-      } else {
-        guardarImageTv([
-          {
-            id: '1',
-            titulo: 'default',
-            direccion: 'https://boplus.tv/img_apk/img_tv/boliviajovenlog.jpg',
-          },
-        ]);
       }
     });
   }, []);
   //---------------------------------
-  const renderItem = (data) => (
+  const renderItem2 = (data) => (
     <View key={data.id} style={styles.item}>
       <Image style={styles.tinyLogo} source={{uri: data.direccion}} />
     </View>
@@ -49,7 +41,7 @@ const CasouselTv = () => {
         <View style={styles.seccion_1}>
           <Carousel
             pagination={Pagination}
-            renderItem={renderItem}
+            renderItem={renderItem2}
             data={imagetv}
             autoplay={true}
             loop={true}
@@ -65,16 +57,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignSelf: 'stretch',
-    backgroundColor: 'red',
   },
   seccion_1: {
-    height: DEVICE_HEIGHT * 0.35,
+    height: DEVICE_HEIGHT * 0.25,
     alignItems: 'center',
     justifyContent: 'center',
   },
   item: {
     width: DEVICE_WIDTH,
-    height: DEVICE_HEIGHT * 0.35,
+    height: DEVICE_HEIGHT * 0.25,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#000',
@@ -82,7 +73,7 @@ const styles = StyleSheet.create({
   tinyLogo: {
     width: DEVICE_WIDTH,
     resizeMode: 'contain',
-    height: DEVICE_HEIGHT * 0.3,
+    height: DEVICE_HEIGHT * 0.23,
   },
 });
 export default CasouselTv;
