@@ -10,6 +10,7 @@ import {
   Linking,
   BackHandler,
   ScrollView,
+  ImageBackground,
 } from 'react-native';
 //Importamos la medidas del dispositivo
 import {DEVICE_WIDTH, DEVICE_HEIGHT} from '../resource/js/Device';
@@ -131,6 +132,16 @@ const Radio = ({navigation}) => {
   const onPress2 = async () => {
     toglePlay();
   };
+  //-------------
+  const onPressFacebook = () => {
+    Linking.openURL('fb://page/1474347942864435')
+      .then((data) => {
+        console.log('WhatsApp Opened');
+      })
+      .catch(() => {
+        alert('Make sure Whatsapp installed on your device');
+      });
+  };
   return (
     <View style={styles.container}>
       <LinearGradient
@@ -139,8 +150,8 @@ const Radio = ({navigation}) => {
         <View style={styles.seccion_1}>
           <View style={styles.seccion_1_1}>
             <Image
-              style={styles.logo_radio}
-              source={require('../resource/img/boplusRadio.png')}
+              style={styles.logo}
+              source={require('../resource/img/logoFondoNegro.png')}
             />
           </View>
           <View style={styles.seccion_1_2}></View>
@@ -153,16 +164,19 @@ const Radio = ({navigation}) => {
         <View style={styles.seccion_2}>
           <View style={styles.seccion_2_2}>
             <Image
-              style={styles.logo}
+              style={styles.logo_redes}
               source={require('../resource/img/whatsapp.png')}
             />
             <Text style={styles.titulo_encabezado}>Whatsapp</Text>
           </View>
           <View style={styles.seccion_2_3}>
-            <Image
-              style={styles.logo}
-              source={require('../resource/img/facebook.png')}
-            />
+            <TouchableOpacity onPress={onPressFacebook}>
+              <Image
+                style={styles.logo_redes}
+                source={require('../resource/img/facebook.png')}
+              />
+            </TouchableOpacity>
+
             <Text style={styles.titulo_encabezado}>Facebook</Text>
           </View>
         </View>
@@ -200,10 +214,17 @@ const Radio = ({navigation}) => {
         </View>
       </View>
       <View style={styles.seccion_4}>
-        <Image
-          style={styles.bolivia_joven_logo}
-          source={require('../resource/img/boliviajovenlog.jpg')}
-        />
+        <ImageBackground
+          source={require('../resource/img/boplusradio/fondo.png')}
+          style={styles.image_back}>
+          <View style={styles.seccion_4_1}>
+            <Image
+              style={styles.bolivia_joven_logo}
+              source={require('../resource/img/boplusradio/boplusradio.png')}
+            />
+          </View>
+          <View style={styles.seccion_4_2}></View>
+        </ImageBackground>
       </View>
       <View style={styles.seccion_5}>
         <CarouselRadio />
@@ -217,6 +238,12 @@ const styles = StyleSheet.create({
     flex: 1,
     alignSelf: 'stretch',
     backgroundColor: 'black',
+  },
+  ///-------------------------------- BACKGROUND TOTAL
+  image_back: {
+    flex: 1,
+    resizeMode: 'cover',
+    justifyContent: 'center',
   },
   //----------------------------------------
   seccion_1: {
@@ -244,23 +271,28 @@ const styles = StyleSheet.create({
     height: DEVICE_HEIGHT * 0.1,
     marginLeft: DEVICE_WIDTH * 0.04,
   },
+
   //----------------------------------------
   seccion_2: {
     height: DEVICE_HEIGHT * 0.17,
     flexDirection: 'row',
   },
-  seccion_2_1: {
-    width: DEVICE_WIDTH * 0.5,
-    justifyContent: 'center',
-  },
   seccion_2_2: {
     width: DEVICE_WIDTH * 0.5,
     justifyContent: 'center',
   },
-
+  seccion_2_3: {
+    width: DEVICE_WIDTH * 0.5,
+    justifyContent: 'center',
+  },
+  logo_redes: {
+    width: null,
+    resizeMode: 'contain',
+    height: DEVICE_HEIGHT * 0.07,
+  },
   titulo_encabezado: {
     color: 'white',
-    marginLeft: DEVICE_WIDTH * 0.1,
+    marginLeft: DEVICE_WIDTH * 0.17,
     marginTop: 5,
     fontFamily: 'PFBeauSansPro-Regular',
   },
@@ -305,12 +337,22 @@ const styles = StyleSheet.create({
   //------------------------------------------
   seccion_4: {
     height: DEVICE_HEIGHT * 0.25,
-    backgroundColor: '#044c74',
+    backgroundColor: '#090909',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingLeft: 15,
+  },
+  seccion_4_1: {
+    height: DEVICE_HEIGHT * 0.25 * 0.5,
+  },
+  seccion_4_2: {
+    height: DEVICE_HEIGHT * 0.25 * 0.5,
   },
   bolivia_joven_logo: {
     width: DEVICE_WIDTH,
     resizeMode: 'contain',
-    height: DEVICE_HEIGHT * 0.25,
+    height: DEVICE_HEIGHT * 0.25 * 0.5,
+    marginLeft: DEVICE_WIDTH * 0.02,
   },
   //------------------------------------------
   seccion_5: {

@@ -63,10 +63,7 @@ const Navigation = () => {
           component={Programacion}
           options={{
             headerShown: false,
-            transitionSpec: {
-              open: config,
-              close: config,
-            },
+            cardStyleInterpolator: forFade,
           }}
         />
         <Stack.Screen

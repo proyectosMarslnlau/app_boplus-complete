@@ -10,40 +10,82 @@ import LinearGradient from 'react-native-linear-gradient';
 //Importamos el Context
 import boplusContext from '../context/boplus/boplusContext';
 //--------------------------------------------------------
-const DATA = [{text: '#1'}, {text: '#2'}, {text: '#3'}];
-
+//Inicio de programa
+//--------------------------------------------------------
 const CasouselAnuncio = () => {
-  //State Locales
-
+  //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  //STATE LOCALES
+  const [defaultimage, guardarDefaultImage] = useState(false);
+  //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   //Creamo slos STATE DE consultas
   const {imagenespublicidad, funcionPeticionImagenPublicidad} = useContext(
     boplusContext,
   );
-  //
+
+  //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  //Area de useEffect para iniciar las consultas
   useEffect(() => {
-    //Invocamos la funcion que nos devuelven las imagenes subidas
-    funcionPeticionImagenPublicidad();
+    guardarDefaultImage(false);
+    //Invocamos la funcion que nos devuelven las imagenes subidas de PUBLICIDAD
+    funcionPeticionImagenPublicidad().then((item) => {
+      if (item === false) {
+        console.log('LENNY LAURA VALENCIA ARUQUIPA');
+        guardarDefaultImage(true);
+      }
+    });
+    console.log('MARCELO');
+    console.log(imagenespublicidad);
   }, []);
+
   //Funcion que renderiza al objeto
   const renderItem = (data) => (
     <View key={data.id} style={styles.item}>
       <Image style={styles.tinyLogo} source={{uri: data.direccion}} />
     </View>
   );
+  //--------------------------------------------------------------------------
+  //Funcion que renderiza al objeto
+  //--------------------------------------------------------------------------
+  const DATA_DEFAULT = [
+    {
+      id: 1,
+      direccion: '../resource/img/compresed/bopluscomprimida.jpg',
+    },
+  ];
+  const renderItemDefault = (data) => (
+    <View key={data.id} style={styles.item}>
+      <Image
+        style={styles.tinyLogo}
+        source={require('../resource/img/compresed/bopluscomprimida.jpg')}
+      />
+    </View>
+  );
+  //--------------------------------------------------------------------------
   return (
     <View style={styles.container}>
       <LinearGradient
         colors={['#090909', '#332c1c', '#452f20']}
         style={styles.linearGradient}>
         <View style={styles.seccion_1}>
-          <Carousel
-            pagination={Pagination}
-            renderItem={renderItem}
-            data={imagenespublicidad}
-            autoplay={true}
-            loop={true}
-            autoplayInterval={4000}
-          />
+          {defaultimage ? (
+            <Carousel
+              pagination={Pagination}
+              renderItem={renderItemDefault}
+              data={DATA_DEFAULT}
+              autoplay={true}
+              loop={true}
+              autoplayInterval={4000}
+            />
+          ) : (
+            <Carousel
+              pagination={Pagination}
+              renderItem={renderItem}
+              data={imagenespublicidad}
+              autoplay={true}
+              loop={true}
+              autoplayInterval={4000}
+            />
+          )}
         </View>
       </LinearGradient>
     </View>

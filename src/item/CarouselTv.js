@@ -13,12 +13,15 @@ import boplusContext from '../context/boplus/boplusContext';
 const DATA = [{text: '#1'}, {text: '#2'}, {text: '#3'}];
 
 const CasouselTv = () => {
+  //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   //State Locales
   const [imagetv, guardarImageTv] = useState();
-  //Funcion que renderiza al objeto
-  //Creamo slos STATE DE consultas
+  //-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  //Funciones del useContext
   const {funcionPeticionImagenTv} = useContext(boplusContext);
-  //
+  //-----------------------------------------------------------------
+  //Area de useEFFECT
+  //-----------------------------------------------------------------
   useEffect(() => {
     funcionPeticionImagenTv().then((item) => {
       if (item !== false) {
@@ -36,7 +39,7 @@ const CasouselTv = () => {
   return (
     <View style={styles.container}>
       <LinearGradient
-        colors={['#090909', '#332c1c', '#452f20']}
+        colors={['#090909', '#090909', '#452f20']}
         style={styles.linearGradient}>
         <View style={styles.seccion_1}>
           <Carousel

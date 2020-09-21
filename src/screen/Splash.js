@@ -12,10 +12,13 @@ import LinearGradient from 'react-native-linear-gradient';
 ///----------------------------------------------------------------
 const Splash = ({navigation}) => {
   //------------------------
-  //USE EFECT DE INCIO
+  //USE EFECT DE INICIO
   useEffect(() => {
+    //Bloqueamos la orientacion solo a PORTRAIT
     Orientation.lockToPortrait();
+    //Le damos un tiempo de de 9 segundos para la animacion de entrada
     setTimeout(() => {
+      //Nos dirigimos a SCREEN SELECTOR
       navigation.navigate('selector');
     }, 9000);
   }, []);
@@ -42,6 +45,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignSelf: 'stretch',
   },
+  //-----------------------------------------VIDEO
   video: {
     position: 'absolute',
     top: 0,

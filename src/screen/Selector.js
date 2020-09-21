@@ -19,9 +19,9 @@ import alertContext from '../context/alert/alertContext';
 //Carousel de Anuncio CAMBIAR
 import CarouselAnuncio from '../item/CarouselAnuncio';
 import CarouselTv from '../item/CarouselTv';
-import CarouselRadio from '../item/CarouselRadio';
-//Importamos la libreria de modal
-import Modal from 'react-native-modal';
+
+//Importamos el ITEM MODAL
+import ModalContact from '../item/ModalContact';
 //Importamos Componente de ALERT
 import AlertError from '../item/AlertError';
 //Importamos libreria de INTERNET
@@ -36,12 +36,15 @@ const Selector = ({navigation}) => {
   const netInfo = useNetInfo();
   //State LOCALES
   const [modal, guardarModal] = useState(false);
+
   //------------------------------
   // USE EFFECT DE INICIO
   //-----------------------------
   useEffect(() => {
-    //Funcion del boton de atras BACK
+    //Funcion del boton de atras BACK HARDWARE
     const backAction = () => {
+      ///+++++++++++++++++++++++++++++++++++++
+      //Pregunta si realmente se desea SALIR
       Alert.alert('Salir', 'Esta seguro de Salir', [
         {
           text: 'Cancel',
@@ -52,7 +55,7 @@ const Selector = ({navigation}) => {
       ]);
       return true;
     };
-
+    //Ejecucion de la funcion de RETROCESO
     const backHandler = BackHandler.addEventListener(
       'hardwareBackPress',
       backAction,
@@ -61,9 +64,11 @@ const Selector = ({navigation}) => {
     return () => backHandler.remove();
   }, []);
 
-  //-------------------------------
-  //Funcion direccion TV
+  //--------------------------------------
+  //Funcion direccion PROGRAMACION DE TV
+  ///-------------------------------------
   const onPressBoPlus = () => {
+    //Verifica si esta CONECTADO EN INTERNET
     if (netInfo.isConnected) {
       navigation.navigate('programacion');
     } else {
@@ -71,12 +76,15 @@ const Selector = ({navigation}) => {
         estado: true,
         mensaje: 'Sin acceso a Internet, Verifique su Conexion',
       };
+      //Se inicializa la ALERTA ERROR
       funcionAlertError(valorError);
     }
   };
   //-------------------------------
   //Funcion direccion Radio
+  //-------------------------------
   const onPressRadio = () => {
+    //Verifica si esta CONECTADO EN INTERNET
     if (netInfo.isConnected) {
       navigation.navigate('radio');
     } else {
@@ -84,12 +92,15 @@ const Selector = ({navigation}) => {
         estado: true,
         mensaje: 'Sin acceso a Internet, Verifique su Conexion',
       };
+      //Se inicializa la ALERTA ERROR
       funcionAlertError(valorError);
     }
   };
   //-------------------------------
   //Funcion Direccion QD
+  //-------------------------------
   const onPressQd = () => {
+    //Verifica si esta CONECTADO EN INTERNET
     if (netInfo.isConnected) {
       navigation.navigate('qdshow');
     } else {
@@ -97,13 +108,14 @@ const Selector = ({navigation}) => {
         estado: true,
         mensaje: 'Sin acceso a Internet, Verifique su Conexion',
       };
+      //Se inicializa la ALERTA ERROR
       funcionAlertError(valorError);
     }
   };
   //-------------------------------
   //Funcion CONTACTOS
   const onPressContact = () => {
-    console.log('PRESIONO EL CONTACTO');
+    //Se inicializa el MODAL DE CONTACTOS
     guardarModal(true);
   };
   //--------------------------------------------------------
@@ -141,7 +153,7 @@ const Selector = ({navigation}) => {
         <View style={styles.seccion_1}>
           <Button
             icon={
-              <Icon name="tv" size={20} color="#FFB718" style={styles.icono} />
+              <Icon name="tv" size={20} color="#ffd618" style={styles.icono} />
             }
             title="BoPlus TV"
             type="outline"
@@ -152,7 +164,7 @@ const Selector = ({navigation}) => {
               borderWidth: 1,
             }}
             titleStyle={{
-              color: '#FFB718',
+              color: '#ffd618',
               fontFamily: 'PFBeauSansPro-BlackItalic',
               fontSize: 22,
             }}
@@ -165,7 +177,7 @@ const Selector = ({navigation}) => {
               <Icon
                 name="volume-up"
                 size={20}
-                color="#4E869F"
+                color="#DC5F13"
                 style={styles.icono}
               />
             }
@@ -175,13 +187,13 @@ const Selector = ({navigation}) => {
               backgroundColor: 'black',
               paddingHorizontal: DEVICE_WIDTH * 0.1,
               borderRadius: 10,
-              borderColor: '#4E869F',
+              borderColor: '#B21E27',
               borderWidth: 1,
             }}
             titleStyle={{
-              color: '#4E869F',
+              color: '#DC5F13',
               fontFamily: 'PFBeauSansPro-Black',
-              fontSize: 20,
+              fontSize: 22,
             }}
             onPress={onPressRadio}
           />
@@ -192,7 +204,7 @@ const Selector = ({navigation}) => {
               <Icon
                 name="youtube"
                 size={20}
-                color="#FEEE0D"
+                color="#06DEF1"
                 style={styles.icono}
               />
             }
@@ -202,29 +214,24 @@ const Selector = ({navigation}) => {
               backgroundColor: 'black',
               paddingHorizontal: DEVICE_WIDTH * 0.1,
               borderRadius: 10,
-              borderColor: '#FEEE0D',
+              borderColor: '#0599D1',
               borderWidth: 1,
             }}
             titleStyle={{
-              color: '#FEEE0D',
+              color: '#06DEF1',
               fontFamily: 'Smoolthan Regular',
               fontSize: 19,
             }}
             onPress={onPressQd}
           />
         </View>
+        {/* ---------------------------------------------------------- */}
         <View style={styles.seccion_4}>
-          <CarouselTv />
+          <CarouselAnuncio />
         </View>
-        <Modal
-          isVisible={modal}
-          animationInTiming={800}
-          animationOutTiming={1000}
-          onBackdropPress={() => guardarModal(false)}>
-          <View style={styles.modal}>
-            <Text>MARSLNLAU</Text>
-          </View>
-        </Modal>
+        {/* ----------------------------------------------------------- */}
+        <ModalContact guardarModal={guardarModal} modal={modal} />
+        {/* ----------------------------------------------------------- */}
       </ImageBackground>
       <AlertError />
     </View>
@@ -236,12 +243,13 @@ const styles = StyleSheet.create({
     flex: 1,
     alignSelf: 'stretch',
   },
+  ///-------------------------------- BACKGROUND TOTAL
   image: {
     flex: 1,
     resizeMode: 'cover',
     justifyContent: 'center',
   },
-  //----------------------------------
+  //---------------------------------- SECCION BANNER DE ENTRADA
   seccion_0: {
     height: DEVICE_HEIGHT * 0.15,
     flex: 1,
@@ -265,42 +273,34 @@ const styles = StyleSheet.create({
     height: DEVICE_HEIGHT * 0.1,
     marginLeft: DEVICE_WIDTH * 0.05,
   },
-  //------------------------------------
+  //------------------------------------ SECCION DE BOTON TV BOPLUS
   seccion_1: {
     alignItems: 'center',
     justifyContent: 'flex-end',
     height: DEVICE_HEIGHT * 0.2,
   },
-  //-------------------------------------
+  //------------------------------------- SECCION  DE BOTON RADIO BOPLUS
   seccion_2: {
     alignItems: 'center',
     justifyContent: 'center',
 
     height: DEVICE_HEIGHT * 0.2,
   },
-  //--------------------------------------
+  //-------------------------------------- SECCION DE BOTON QDSHOW
   seccion_3: {
     alignItems: 'center',
     justifyContent: 'flex-start',
     height: DEVICE_HEIGHT * 0.2,
   },
-  //----------------------------------------
+  //---------------------------------------- SECCION DE CAROUSEL DE PUBLICIDAD
   seccion_4: {
     alignItems: 'center',
     justifyContent: 'center',
     height: DEVICE_HEIGHT * 0.25,
   },
-  //----------------------------------------
-  button: {},
+  //---------------------------------------- STYLE Y VARIOS
   icono: {
     marginHorizontal: 5,
-  },
-  modal: {
-    backgroundColor: 'white',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: DEVICE_HEIGHT * 0.7,
-    borderRadius: 10,
   },
 });
 export default Selector;

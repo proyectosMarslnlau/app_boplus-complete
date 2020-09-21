@@ -8,13 +8,21 @@ import axios from 'axios';
 import {
   PETICION_IMAGENES_TV,
   PETICION_IMAGENES_ANUNCIO,
+  PETICION_PUBLICIDAD_PRINCIPAL,
 } from '../../type/index';
+//Importamos la direccion
+import {
+  peticion_imagenes_publicidad,
+  peticion_imagenes_programacion,
+  peticion_publicidad_principal,
+} from '../../resource/js/DirectionApi';
 //-----------------------------------------------------
 const BoplusState = (props) => {
   const initialState = {
-    imagenesradio: null,
+    imagenesradio: [],
     imagenestv: [],
     imagenespublicidad: [],
+    imagenpublicidadprincipal: [{direccion: ''}],
   };
   const [state, dispatch] = useReducer(boplusReducer, initialState);
   //
@@ -39,16 +47,15 @@ const BoplusState = (props) => {
   //
   const funcionPeticionImagenTv = async () => {
     try {
-      const urlImagenRadio =
-        'https://boplus.tv/api/siteWeb/request/peticionInformacionTv.php';
-      const peticion = await axios.get(urlImagenRadio);
+      const urlImagenTv = peticion_imagenes_programacion;
+      const peticion = await axios.get(urlImagenTv);
       const respuestaImagenTv = peticion.data;
-      console.log(respuestaImagenTv.length);
-      console.log('LENNY ');
-
       if (respuestaImagenTv.length !== 0) {
         //Retornamos el ARREGLO con la informacion
-        return respuestaImagenTv;
+        dispatch({
+          type: PETICION_IMAGENES_TV,
+          payload: respuestaImagenTv,
+        });
       } else {
         return false;
       }
@@ -59,17 +66,44 @@ const BoplusState = (props) => {
   //
   const funcionPeticionImagenPublicidad = async () => {
     try {
-      const urlImagenRadio =
-        'https://boplus.tv/api/siteWeb/request/peticionInformacionPublicidad.php';
-      const peticion = await axios.get(urlImagenRadio);
-      const respuestaImagenTv = peticion.data;
-      console.log(respuestaImagenTv.length);
-      console.log('LENNY ');
-      if (respuestaImagenTv.length !== 0) {
+      //----------------------------------------------
+      //Importamoas la variable de direccion de API
+      const urlImagenPublicidad = peticion_imagenes_publicidad;
+      //Realizamos la peticion mediante AXIOS
+      const peticion = await axios.get(urlImagenPublicidad);
+      //Respuesta de la peticion
+      const respuestaImagenPublicidad = peticion.data;
+      //Verificacion de la informacion recibida
+      if (respuestaImagenPublicidad.length !== 0) {
         dispatch({
           type: PETICION_IMAGENES_ANUNCIO,
-          payload: respuestaImagenTv,
+          payload: respuestaImagenPublicidad,
         });
+      } else {
+        return false;
+      }
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  };
+  //
+  const funcionPeticionPublicidadPrincipal = async () => {
+    try {
+      //----------------------------------------------
+      //Importamoas la variable de direccion de API
+      const urlImagenPublicidadPrincipal = peticion_publicidad_principal;
+      //Realizamos la peticion mediante AXIOS
+      const peticion = await axios.get(urlImagenPublicidadPrincipal);
+      //Respuesta de la peticion
+      const respuestaImagenPublicidadPrincipal = peticion.data;
+      //Verificacion de la informacion recibida
+      if (respuestaImagenPublicidadPrincipal.length !== 0) {
+        dispatch({
+          type: PETICION_PUBLICIDAD_PRINCIPAL,
+          payload: respuestaImagenPublicidadPrincipal,
+        });
+        return respuestaImagenPublicidadPrincipal;
       } else {
         return false;
       }
@@ -83,9 +117,11 @@ const BoplusState = (props) => {
         imagenesradio: state.imagenesradio,
         imagenestv: state.imagenestv,
         imagenespublicidad: state.imagenespublicidad,
+        imagenpublicidadprincipal: state.imagenpublicidadprincipal,
         funcionPeticionImagenRadio,
         funcionPeticionImagenTv,
         funcionPeticionImagenPublicidad,
+        funcionPeticionPublicidadPrincipal,
       }}>
       {props.children}
     </boplusContext.Provider>

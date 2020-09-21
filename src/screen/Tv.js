@@ -51,7 +51,7 @@ const Tv = ({navigation}) => {
     if (deviceOrientation === 'portrait') {
       guardarMedidas({
         width: DEVICE_WIDTH,
-        height: DEVICE_HEIGHT * 0.5,
+        height: DEVICE_HEIGHT * 0.9,
       });
     } else {
       guardarMedidas({
@@ -151,24 +151,8 @@ const Tv = ({navigation}) => {
             disableVolume
             disableSeekbar
             repeat={true}
+            style={styles.video}
           />
-        </View>
-        <View style={styles.seccion_texto}>
-          <Text style={styles.texto_programacion}>
-            <Icon
-              name="description"
-              type="material"
-              color="#fff"
-              containerStyle={styles.icono}
-              size={18}
-              repeat={true}
-            />
-            Nuestra Programación
-          </Text>
-        </View>
-
-        <View>
-          <Button title="Solid Button" onPress={onPressView} />
         </View>
       </ScrollView>
     </View>
@@ -204,8 +188,9 @@ const styles = StyleSheet.create({
   //--------------------------
   seccion_1: {
     width: DEVICE_WIDTH,
-    height: DEVICE_HEIGHT * 0.5,
+    height: DEVICE_HEIGHT * 0.9,
   },
+
   //----------------------------------
   seccion_texto: {
     width: DEVICE_WIDTH,
