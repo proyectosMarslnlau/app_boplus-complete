@@ -26,9 +26,9 @@ const ModalContact = ({modal, guardarModal}) => {
           <View style={styles.seccion_2}>
             <Text style={styles.texto_contacto}>Contactos</Text>
             <View style={styles.datos_contactos}>
-              <Text>Telefono : 2-245234</Text>
-              <Text>Celular : 71922145</Text>
-              <Text>Email : boplus@gmail.com</Text>
+              <Text>Telefono : 2-776359</Text>
+              <Text>Celular : +591 72001177</Text>
+              <Text>Email : boplustv@gmail.com</Text>
               <Text>Facebook : BoPlusTV</Text>
               <Text>Whatsapp : +591 71495214</Text>
             </View>

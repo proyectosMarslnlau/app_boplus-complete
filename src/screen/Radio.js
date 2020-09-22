@@ -40,6 +40,23 @@ const Radio = ({navigation}) => {
     imagenpublicidadprincipal,
     funcionPeticionPublicidadPrincipal,
   } = useContext(boplusContext);
+  //+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  //---------------------------------------------------------
+  const events = [
+    TrackPlayerEvents.PLAYBACK_STATE,
+    TrackPlayerEvents.PLAYBACK_ERROR,
+  ];
+  //-------------------------------------
+  useTrackPlayerEvents(events, (event) => {
+    if (event.type === TrackPlayerEvents.PLAYBACK_ERROR) {
+      let valorError = {
+        estado: true,
+        mensaje: 'BoPlus Radio no Disponible. Intente mas Tarde',
+      };
+      funcionAlertError(valorError);
+      navigation.navigate('selector');
+    }
+  });
   //Usamos los STATE LOCALES
   useEffect(() => {
     funcionPeticionPublicidadPrincipal();
@@ -60,7 +77,7 @@ const Radio = ({navigation}) => {
   //INSTANCIAMOS LA RADIO
   //---------------------------------------------------------
   const playbackState = usePlaybackState();
-  const [estado, guardarEstado] = useState('Stop');
+  const [estado, guardarEstado] = useState('Play');
   //---------------------------------------------
   const config = async () => {
     await TrackPlayer.setupPlayer({});
@@ -78,12 +95,12 @@ const Radio = ({navigation}) => {
       ],
     });
     TrackPlayer.addEventListener('remote-play', (event) => {
-      guardarEstado('play');
+      guardarEstado('Play');
       TrackPlayer.play();
     });
 
     TrackPlayer.addEventListener('remote-pause', (event) => {
-      guardarEstado('pause');
+      guardarEstado('Pause');
       TrackPlayer.pause();
     });
 
@@ -109,7 +126,7 @@ const Radio = ({navigation}) => {
         artwork: 'https://boplus.tv/img_apk/img_tv/boplusprincipal.jpg',
         duration: 28,
       });
-      guardarEstado('play');
+      guardarEstado('Stop');
       await TrackPlayer.play();
       //config();
     } else {
@@ -126,7 +143,7 @@ const Radio = ({navigation}) => {
   //----------------------------------------------------------
   const onPress = async () => {
     try {
-      guardarEstado('Stop');
+      guardarEstado('Play');
       await TrackPlayer.stop();
       config();
     } catch (_) {}
@@ -137,16 +154,22 @@ const Radio = ({navigation}) => {
   };
   //-------------
   const onPressFacebook = () => {
-    Linking.openURL('fb://page/1474347942864435')
+    Linking.openURL('fb://profile/100048286309201')
       .then((data) => {
         console.log('WhatsApp Opened');
       })
       .catch(() => {
-        alert('Make sure Whatsapp installed on your device');
+        let valorError = {
+          estado: true,
+          mensaje:
+            'No cuenta con la Aplicacion Facebook Instalado en su Dispositivo',
+        };
+        //Se inicializa la ALERTA ERROR
+        funcionAlertError(valorError);
       });
   };
   const onPressWhatsapp = () => {
-    Linking.openURL('whatsapp://send?phone=59171562642')
+    Linking.openURL('whatsapp://send?phone=59172001177')
       .then((data) => {
         console.log('WhatsApp Opened');
       })
@@ -204,7 +227,7 @@ const Radio = ({navigation}) => {
       <View style={styles.seccion_3}>
         <View style={styles.seccion_3_1}>
           <Text style={styles.texto_reproduccion}>{estado}</Text>
-          {estado !== 'play' ? (
+          {estado !== 'Stop' ? (
             <TouchableOpacity onPress={onPress2} activeOpacity={0.9}>
               <Image
                 source={require('../resource/img/play.png')}

@@ -87,7 +87,8 @@ const Programacion = ({navigation}) => {
           {imagenestv.map((item) => (
             <Card
               containerStyle={{backgroundColor: '#DAD8D6', borderRadius: 10}}
-              wrapperStyle={{backgroundColor: '#DAD8DF'}}>
+              wrapperStyle={{backgroundColor: '#DAD8DF'}}
+              key={item.id}>
               <Card.Title>
                 <Text style={styles.texto_card}>{item.titulo}</Text>
               </Card.Title>

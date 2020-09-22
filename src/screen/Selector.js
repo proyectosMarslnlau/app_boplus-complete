@@ -124,7 +124,7 @@ const Selector = ({navigation}) => {
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={require('../resource/img/fondoBo.png')}
+        source={require('../resource/img/gifuno.gif')}
         style={styles.image}>
         <View style={styles.seccion_0}>
           <View style={styles.seccion_0_1}>

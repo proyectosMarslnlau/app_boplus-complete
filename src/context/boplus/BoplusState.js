@@ -25,7 +25,9 @@ const BoplusState = (props) => {
     imagenesradio: [],
     imagenestv: [],
     imagenespublicidad: [],
-    imagenpublicidadprincipal: [{direccion: ''}],
+    imagenpublicidadprincipal: [
+      {direccion: 'https://boplus.tv/img_apk/img_tv/boplusprincipal.jpg'},
+    ],
     informacionqd: [],
   };
   const [state, dispatch] = useReducer(boplusReducer, initialState);
