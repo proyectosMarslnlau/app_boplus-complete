@@ -10,6 +10,8 @@ import LinearGradient from 'react-native-linear-gradient';
 //Importamos el Context
 import boplusContext from '../context/boplus/boplusContext';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+////Context Alert
+import alertContext from '../context/alert/alertContext';
 //--------------------------------------------------------
 const DATA = [{text: '#1'}, {text: '#2'}, {text: '#3'}];
 
@@ -18,10 +20,12 @@ const CasouselRadio = () => {
 
   //Creamo slos STATE DE consultas
   const {funcionPeticionImagenRadio} = useContext(boplusContext);
+  //
+  //Declaracion del STATE CONTEXT
+  const {funcionAlertError} = useContext(alertContext);
   useEffect(() => {
     funcionPeticionImagenRadio().then((item) => {
       if (item !== false) {
-        console.log(item);
         guardarimageradio(item);
       }
     });
@@ -40,7 +44,19 @@ const CasouselRadio = () => {
               console.log('Facebook Opened');
             })
             .catch(() => {
-              alert('Make sure Whatsapp installed on your device');
+              Linking.openURL(data.facebook)
+                .then((data) => {
+                  console.log('Facebook Open');
+                })
+                .catch(() => {
+                  let valorError = {
+                    estado: true,
+                    mensaje:
+                      'No cuenta con alguna Aplicación que pueda abrir la dirección',
+                  };
+                  //Se inicializa la ALERTA ERROR
+                  funcionAlertError(valorError);
+                });
             })
         }>
         <Image style={styles.tinyLogo} source={{uri: data.direccion}} />

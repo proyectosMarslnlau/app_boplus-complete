@@ -159,13 +159,19 @@ const Radio = ({navigation}) => {
         console.log('WhatsApp Opened');
       })
       .catch(() => {
-        let valorError = {
-          estado: true,
-          mensaje:
-            'No cuenta con la Aplicacion Facebook Instalado en su Dispositivo',
-        };
-        //Se inicializa la ALERTA ERROR
-        funcionAlertError(valorError);
+        Linking.openURL('https://www.facebook.com/boplus.canal.9')
+          .then((data) => {
+            console.log('Facebook Open');
+          })
+          .catch(() => {
+            let valorError = {
+              estado: true,
+              mensaje:
+                'No cuenta con alguna Aplicación que pueda abrir la dirección',
+            };
+            //Se inicializa la ALERTA ERROR
+            funcionAlertError(valorError);
+          });
       });
   };
   const onPressWhatsapp = () => {

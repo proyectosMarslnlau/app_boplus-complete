@@ -24,13 +24,17 @@ const ModalContact = ({modal, guardarModal}) => {
             />
           </View>
           <View style={styles.seccion_2}>
-            <Text style={styles.texto_contacto}>Contactos</Text>
+            <Text style={styles.texto_contacto}>Contactos Publicitarios</Text>
             <View style={styles.datos_contactos}>
-              <Text>Telefono : 2-776359</Text>
               <Text>Celular : +591 72001177</Text>
+              <Text>Email : sqlr.1988@gmail.com</Text>
+            </View>
+            <Text style={styles.texto_contacto}>Contactos Canal Boplus</Text>
+            <View style={styles.datos_contactos}>
+              <Text>Celular : +591 71562642</Text>
               <Text>Email : boplustv@gmail.com</Text>
               <Text>Facebook : BoPlusTV</Text>
-              <Text>Whatsapp : +591 71495214</Text>
+              <Text>Página Oficial : https://boplus.tv/</Text>
             </View>
           </View>
           <View style={styles.seccion_3}>
@@ -66,7 +70,7 @@ const styles = StyleSheet.create({
   },
   ///-----------------------------------
   seccion_2: {
-    height: DEVICE_HEIGHT * 0.7 * 0.3,
+    height: DEVICE_HEIGHT * 0.7 * 0.45,
   },
   texto_contacto: {
     fontSize: 18,
@@ -80,7 +84,7 @@ const styles = StyleSheet.create({
   },
   //------------------------------------
   seccion_3: {
-    height: DEVICE_HEIGHT * 0.7 * 0.2,
+    height: DEVICE_HEIGHT * 0.7 * 0.15,
     justifyContent: 'flex-end',
     alignItems: 'center',
   },
@@ -90,7 +94,7 @@ const styles = StyleSheet.create({
   },
   //-------------------------------------
   seccion_4: {
-    height: DEVICE_HEIGHT * 0.7 * 0.2,
+    height: DEVICE_HEIGHT * 0.7 * 0.1,
     justifyContent: 'flex-end',
   },
   bboplusblack: {
