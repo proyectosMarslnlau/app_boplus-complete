@@ -33,8 +33,6 @@ const CasouselAnuncio = () => {
         guardarDefaultImage(true);
       }
     });
-    console.log('MARCELO');
-    console.log(imagenespublicidad);
   }, []);
 
   //Funcion que renderiza al objeto
@@ -63,31 +61,27 @@ const CasouselAnuncio = () => {
   //--------------------------------------------------------------------------
   return (
     <View style={styles.container}>
-      <LinearGradient
-        colors={['#090909', '#332c1c', '#452f20']}
-        style={styles.linearGradient}>
-        <View style={styles.seccion_1}>
-          {defaultimage ? (
-            <Carousel
-              pagination={Pagination}
-              renderItem={renderItemDefault}
-              data={DATA_DEFAULT}
-              autoplay={true}
-              loop={true}
-              autoplayInterval={4000}
-            />
-          ) : (
-            <Carousel
-              pagination={Pagination}
-              renderItem={renderItem}
-              data={imagenespublicidad}
-              autoplay={true}
-              loop={true}
-              autoplayInterval={4000}
-            />
-          )}
-        </View>
-      </LinearGradient>
+      <View style={styles.seccion_1}>
+        {defaultimage ? (
+          <Carousel
+            pagination={Pagination}
+            renderItem={renderItemDefault}
+            data={DATA_DEFAULT}
+            autoplay={true}
+            loop={true}
+            autoplayInterval={4000}
+          />
+        ) : (
+          <Carousel
+            pagination={Pagination}
+            renderItem={renderItem}
+            data={imagenespublicidad}
+            autoplay={true}
+            loop={true}
+            autoplayInterval={4000}
+          />
+        )}
+      </View>
     </View>
   );
 };
@@ -105,9 +99,8 @@ const styles = StyleSheet.create({
   item: {
     width: DEVICE_WIDTH,
     height: DEVICE_HEIGHT * 0.25,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#000',
+    alignItems: 'flex-end',
+    justifyContent: 'flex-end',
   },
   tinyLogo: {
     width: DEVICE_WIDTH,

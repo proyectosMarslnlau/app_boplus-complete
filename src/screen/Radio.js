@@ -26,12 +26,21 @@ import {SliderVolumeController} from 'react-native-volume-controller';
 import LinearGradient from 'react-native-linear-gradient';
 //Importamos el Carousel de RADIO
 import CarouselRadio from '../item/CarouselRadio';
+//
+import boplusContext from '../context/boplus/boplusContext';
+
 //------------------------------------------------------------
 //Inicio del programa
 //------------------------------------------------------------
 const Radio = ({navigation}) => {
+  //
+  const {
+    imagenpublicidadprincipal,
+    funcionPeticionPublicidadPrincipal,
+  } = useContext(boplusContext);
   //Usamos los STATE LOCALES
   useEffect(() => {
+    funcionPeticionPublicidadPrincipal();
     //Fucion que se usa para el boton de atras
     const backAction = async () => {
       guardarEstado('Stop');
@@ -223,7 +232,12 @@ const Radio = ({navigation}) => {
               source={require('../resource/img/boplusradio/boplusradio.png')}
             />
           </View>
-          <View style={styles.seccion_4_2}></View>
+          <View style={styles.seccion_4_2}>
+            <Image
+              style={styles.publicidad_principal}
+              source={{uri: imagenpublicidadprincipal[0].direccion}}
+            />
+          </View>
         </ImageBackground>
       </View>
       <View style={styles.seccion_5}>
@@ -244,6 +258,7 @@ const styles = StyleSheet.create({
     flex: 1,
     resizeMode: 'cover',
     justifyContent: 'center',
+    width: DEVICE_WIDTH,
   },
   //----------------------------------------
   seccion_1: {
@@ -344,15 +359,21 @@ const styles = StyleSheet.create({
   },
   seccion_4_1: {
     height: DEVICE_HEIGHT * 0.25 * 0.5,
+    alignItems: 'center',
   },
   seccion_4_2: {
     height: DEVICE_HEIGHT * 0.25 * 0.5,
   },
   bolivia_joven_logo: {
-    width: DEVICE_WIDTH,
+    width: DEVICE_WIDTH * 0.8,
     resizeMode: 'contain',
     height: DEVICE_HEIGHT * 0.25 * 0.5,
     marginLeft: DEVICE_WIDTH * 0.02,
+  },
+  publicidad_principal: {
+    width: DEVICE_WIDTH,
+    resizeMode: 'contain',
+    height: DEVICE_HEIGHT * 0.25 * 0.5,
   },
   //------------------------------------------
   seccion_5: {

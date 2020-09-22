@@ -1,6 +1,6 @@
 import React, {useState, useContext, useEffect} from 'react';
 
-import {View, Text, StyleSheet, Image} from 'react-native';
+import {View, Text, StyleSheet, Image, Linking} from 'react-native';
 //Importamos las medidas de dispositivo
 import {DEVICE_WIDTH, DEVICE_HEIGHT} from '../resource/js/Device';
 //Importamos el Carousel
@@ -9,6 +9,7 @@ import Carousel, {Pagination} from 'react-native-x2-carousel';
 import LinearGradient from 'react-native-linear-gradient';
 //Importamos el Context
 import boplusContext from '../context/boplus/boplusContext';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 //--------------------------------------------------------
 const DATA = [{text: '#1'}, {text: '#2'}, {text: '#3'}];
 
@@ -25,10 +26,25 @@ const CasouselRadio = () => {
       }
     });
   }, []);
+  //
+  const onPressImage = (data) => {
+    console.log(data);
+  };
   //Funcion que renderiza al objeto
   const renderItem = (data) => (
     <View key={data.id} style={styles.item}>
-      <Image style={styles.tinyLogo} source={{uri: data.direccion}} />
+      <TouchableOpacity
+        onPress={() =>
+          Linking.openURL(data.redes)
+            .then((data) => {
+              console.log('Facebook Opened');
+            })
+            .catch(() => {
+              alert('Make sure Whatsapp installed on your device');
+            })
+        }>
+        <Image style={styles.tinyLogo} source={{uri: data.direccion}} />
+      </TouchableOpacity>
     </View>
   );
   return (

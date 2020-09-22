@@ -9,12 +9,15 @@ import {
   PETICION_IMAGENES_TV,
   PETICION_IMAGENES_ANUNCIO,
   PETICION_PUBLICIDAD_PRINCIPAL,
+  PETICION_INFORMACION_QD,
 } from '../../type/index';
 //Importamos la direccion
 import {
   peticion_imagenes_publicidad,
   peticion_imagenes_programacion,
   peticion_publicidad_principal,
+  peticion_informacion_qd,
+  peticion_imagenes_radio,
 } from '../../resource/js/DirectionApi';
 //-----------------------------------------------------
 const BoplusState = (props) => {
@@ -23,17 +26,15 @@ const BoplusState = (props) => {
     imagenestv: [],
     imagenespublicidad: [],
     imagenpublicidadprincipal: [{direccion: ''}],
+    informacionqd: [],
   };
   const [state, dispatch] = useReducer(boplusReducer, initialState);
   //
   const funcionPeticionImagenRadio = async () => {
     try {
-      const urlImagenRadio =
-        'https://boplus.tv/api/siteWeb/request/peticionInformacionRadio.php';
+      const urlImagenRadio = peticion_imagenes_radio;
       const peticion = await axios.get(urlImagenRadio);
       const respuestaImagenRadio = peticion.data;
-      console.log(respuestaImagenRadio.length);
-
       if (respuestaImagenRadio.length !== 0) {
         //Retornamos el ARREGLO con la informacion
         return respuestaImagenRadio;
@@ -111,6 +112,30 @@ const BoplusState = (props) => {
       console.log(error);
     }
   };
+  //
+  const funcionPeticionInformacionQd = async () => {
+    try {
+      //----------------------------------------------
+      //Importamoas la variable de direccion de API
+      const urlInformacionQd = peticion_informacion_qd;
+      //Realizamos la peticion mediante AXIOS
+      const peticion = await axios.get(urlInformacionQd);
+      //Respuesta de la peticion
+      const respuestaInformacionQd = peticion.data;
+      //Verificacion de la informacion recibida
+      if (respuestaInformacionQd.length !== 0) {
+        dispatch({
+          type: PETICION_INFORMACION_QD,
+          payload: respuestaInformacionQd,
+        });
+        return respuestaInformacionQd;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <boplusContext.Provider
       value={{
@@ -118,10 +143,12 @@ const BoplusState = (props) => {
         imagenestv: state.imagenestv,
         imagenespublicidad: state.imagenespublicidad,
         imagenpublicidadprincipal: state.imagenpublicidadprincipal,
+        informacionqd: state.informacionqd,
         funcionPeticionImagenRadio,
         funcionPeticionImagenTv,
         funcionPeticionImagenPublicidad,
         funcionPeticionPublicidadPrincipal,
+        funcionPeticionInformacionQd,
       }}>
       {props.children}
     </boplusContext.Provider>

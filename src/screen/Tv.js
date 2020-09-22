@@ -23,8 +23,6 @@ import LinearGradient from 'react-native-linear-gradient';
 import {Icon} from 'react-native-elements';
 //Importamos la orientacion de MOBILE
 import Orientation from 'react-native-orientation-locker';
-//import
-import boplusContext from '../context/boplus/boplusContext';
 //
 import {Button} from 'react-native-elements';
 
@@ -33,59 +31,17 @@ import {Button} from 'react-native-elements';
 //------------------------------------------------------------------
 const Tv = ({navigation}) => {
   //State Locales
-  const [imagetv, guardarImageTv] = useState([]);
+  const [orientacion, guardarOrientacion] = useState('portrait');
 
-  //----------------------------------
-  const {imagenestv, funcionPeticionImagenTv} = useContext(boplusContext);
-  //-----------------------------------
-  const scrollRef = useRef();
-  //----------
-  //Se pone en escucha el formato de ORIENTATION
-  const deviceOrientation = useDeviceOrientation();
-
-  //Usamos los STATE LOCALES
-  //------------------------------------------------------
-  //Creamos el USE EFFECT para la situacion de estados
-  //------------------------------------------------------
-  useEffect(() => {
-    if (deviceOrientation === 'portrait') {
-      guardarMedidas({
-        width: DEVICE_WIDTH,
-        height: DEVICE_HEIGHT * 0.9,
-      });
-    } else {
-      guardarMedidas({
-        width: DEVICE_HEIGHT,
-        height: DEVICE_WIDTH * 0.95,
-      });
-    }
-  }, [deviceOrientation]);
-  //-----------------------------------------------------------
-  useEffect(() => {
-    //
-    funcionPeticionImagenTv();
-    //Funcion de Habilitacion de ORIENTACION segun el VIEW
-    Orientation.unlockAllOrientations();
-    //Fucion que se usa para el boton de atras
-    const backAction = () => {
-      Orientation.lockToPortrait();
-      navigation.navigate('programacion');
-      return true;
-    };
-    BackHandler.addEventListener('hardwareBackPress', backAction);
-
-    return () =>
-      BackHandler.removeEventListener('hardwareBackPress', backAction);
-  }, []);
-  //---------------------------------------------------------------
-  const {funcionAlertError} = useContext(alertContext);
-
-  //Creamos los STATE LOCALES
   //Importamos useState estas son las medidas iniciales del VIDEO
   const [medidas, guardarMedidas] = useState({
     width: DEVICE_WIDTH,
     height: DEVICE_HEIGHT * 0.5,
   });
+
+  //---------------------------------------------------------------
+  const {funcionAlertError} = useContext(alertContext);
+
   //-------------------------------------------------------
   //Creasmos la funcion que se incluira en el video
   //-------------------------------------------------------
@@ -95,10 +51,16 @@ const Tv = ({navigation}) => {
       height: medidas.height,
     };
   };
-
-  console.log(deviceOrientation);
   //-------------
   //Funciones
+  const onPressPantallaCompleta = () => {
+    Orientation.lockToLandscape();
+    guardarMedidas({
+      width: DEVICE_HEIGHT,
+      height: DEVICE_WIDTH * 0.95,
+    });
+    guardarOrientacion('landscape');
+  };
   //----------------------------------------------------
   const loadErrorCarga = () => {
     let valorError = {
@@ -108,53 +70,65 @@ const Tv = ({navigation}) => {
     funcionAlertError(valorError);
     navigation.navigate('selector');
   };
-  //
-  const onPressView = () => {
-    navigation.navigate('jumptv');
-    /*
-    scrollRef.current?.scrollTo({
-      y: 0,
-      animated: true,
-    });*/
-  };
   return (
     <View>
-      <ScrollView ref={scrollRef}>
-        {deviceOrientation !== 'portrait' ? null : (
-          <LinearGradient
-            colors={['#090909', '#090909', '#452f20']}
-            style={styles.linearGradient}>
-            <View style={styles.seccion_0}>
-              <View style={styles.seccion_0_1}>
-                <Image
-                  style={styles.logo}
-                  source={require('../resource/img/logoFondoNegro.png')}
-                />
-              </View>
-              <View style={styles.seccion_0_2}></View>
-              <View style={styles.seccion_0_3}></View>
-            </View>
-          </LinearGradient>
-        )}
-
-        <View style={style_video()}>
-          <VideoPlayer
-            source={{
-              uri:
-                'https://ia800501.us.archive.org/11/items/popeye_i_dont_scare/popeye_i_dont_scare_512kb.mp4',
-            }}
-            //https://livestreamingperu.com:8081/boliviajoven/tracks-v1a1/mono.m3u8
-            //https://ia800501.us.archive.org/11/items/popeye_i_dont_scare/popeye_i_dont_scare_512kb.mp4
-            onError={loadErrorCarga}
-            disableBack
-            disableFullscreen
-            disableVolume
-            disableSeekbar
-            repeat={true}
-            style={styles.video}
-          />
+      {orientacion === 'landscape' ? null : (
+        <View style={styles.seccion_0}>
+          <View style={styles.seccion_0_1}>
+            <Image
+              style={styles.logo_boplus}
+              source={require('../resource/img/logoFondoNegro.png')}
+            />
+          </View>
+          <View style={styles.seccion_0_2}></View>
+          <View style={styles.seccion_0_3}></View>
         </View>
-      </ScrollView>
+      )}
+
+      <View style={style_video()}>
+        <VideoPlayer
+          source={{
+            uri:
+              'https://ia800501.us.archive.org/11/items/popeye_i_dont_scare/popeye_i_dont_scare_512kb.mp4',
+          }}
+          //https://livestreamingperu.com:8081/boliviajoven/tracks-v1a1/mono.m3u8
+          //https://ia800501.us.archive.org/11/items/popeye_i_dont_scare/popeye_i_dont_scare_512kb.mp4
+          onError={loadErrorCarga}
+          disableBack
+          disableFullscreen
+          disableVolume
+          disableSeekbar
+          repeat={true}
+          style={styles.video}
+        />
+      </View>
+      <Button
+        icon={
+          <Icon
+            name="external-link"
+            size={20}
+            color="#ffd618"
+            type="evilicon"
+            style={styles.icono}
+          />
+        }
+        title="Ver Pantalla Completa"
+        type="outline"
+        buttonStyle={{
+          paddingHorizontal: DEVICE_WIDTH * 0.1,
+          borderRadius: 10,
+          borderColor: '#FFB718',
+          borderWidth: 1,
+          backgroundColor: '#090909',
+        }}
+        titleStyle={{
+          color: '#ffd618',
+          fontFamily: 'PFBeauSansPro-Thin',
+          fontSize: 15,
+          fontWeight: '600',
+        }}
+        onPress={onPressPantallaCompleta}
+      />
     </View>
   );
 };
@@ -165,21 +139,25 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     backgroundColor: 'red',
   },
-  //---------------------
+  //---------------------------------- SECCION BANNER DE ENTRADA
   seccion_0: {
-    height: DEVICE_HEIGHT * 0.1,
+    height: DEVICE_HEIGHT * 0.15,
+    flex: 1,
     flexDirection: 'row',
   },
   seccion_0_1: {
     width: DEVICE_WIDTH * 0.4,
+    justifyContent: 'center',
   },
   seccion_0_2: {
     width: DEVICE_WIDTH * 0.3,
   },
   seccion_0_3: {
     width: DEVICE_WIDTH * 0.3,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  logo: {
+  logo_boplus: {
     width: null,
     resizeMode: 'contain',
     height: DEVICE_HEIGHT * 0.1,

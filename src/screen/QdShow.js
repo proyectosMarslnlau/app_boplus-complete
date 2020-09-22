@@ -1,41 +1,28 @@
-import React, {useEffect} from 'react';
+import React, {useContext, useEffect} from 'react';
 
 import {View, Text, StyleSheet, BackHandler, Image} from 'react-native';
-import {WebView} from 'react-native-webview';
 //Importamos las medidas del APP
 import {DEVICE_WIDTH, DEVICE_HEIGHT} from '../resource/js/Device';
 //Importamos la libreria de degradaciones
 import LinearGradient from 'react-native-linear-gradient';
-//
-//Importamos la libreria de HOOKS
-import useDeviceOrientation from '@rnhooks/device-orientation';
 //Importamos la orientacion de MOBILE
 import Orientation from 'react-native-orientation-locker';
 //
 import YoutubePlayer from 'react-native-youtube-iframe';
 import {ScrollView} from 'react-native-gesture-handler';
+//
+import boplusContext from '../context/boplus/boplusContext';
 //-------------------------------
 const QdShow = ({navigation}) => {
   //Se pone en escucha el formato de ORIENTATION
-  const deviceOrientation = useDeviceOrientation();
-  console.log('ddd QDSHOW');
-  console.log(deviceOrientation);
+  const {informacionqd, funcionPeticionInformacionQd} = useContext(
+    boplusContext,
+  );
   //Usamos los STATE LOCALES
   //
-  const videosYoutube = [
-    {id: 1, direccion: 'PRiEobBbjuo', titulo: 'uno'},
-    {id: 2, direccion: '5r05NlTj4TE', titulo: 'uno'},
-    {id: 3, direccion: 'P-LZgLUMF-g', titulo: 'uno'},
-    {id: 4, direccion: '5bue-9ci3rM', titulo: 'uno'},
-    {id: 5, direccion: 'YjfFq7EzTn4', titulo: 'uno'},
-    {id: 6, direccion: '09L_rBYJnEM', titulo: 'uno'},
-    {id: 7, direccion: '7MbKKyU23g8', titulo: 'uno'},
-    {id: 8, direccion: '5r05NlTj4TE', titulo: 'uno'},
-    {id: 9, direccion: 'i8F_eLny200', titulo: 'uno'},
-    {id: 10, direccion: 'rUjp3qCqQ5I', titulo: 'uno'},
-  ];
-  //
   useEffect(() => {
+    funcionPeticionInformacionQd();
+    console.log(informacionqd);
     Orientation.lockToPortrait();
     //Fucion que se usa para el boton de atras
     const backAction = () => {
@@ -64,14 +51,17 @@ const QdShow = ({navigation}) => {
             <View style={styles.seccion_0_3}></View>
           </View>
 
-          {videosYoutube.map((item) => (
-            <YoutubePlayer
-              key={item.id}
-              height={DEVICE_HEIGHT * 0.3}
-              play={false}
-              videoId={item.direccion}
-              showinfo={false}
-            />
+          {informacionqd.map((item) => (
+            <View key={item.id}>
+              <Text style={styles.texto_qd}>{item.titulo}</Text>
+              <YoutubePlayer
+                key={item.id}
+                height={DEVICE_HEIGHT * 0.3}
+                play={false}
+                videoId={item.direccion}
+                showinfo={false}
+              />
+            </View>
           ))}
         </ScrollView>
       </LinearGradient>
@@ -112,6 +102,15 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     height: DEVICE_HEIGHT * 0.1,
     marginLeft: DEVICE_WIDTH * 0.05,
+  },
+  texto_qd: {
+    marginVertical: 20,
+    color: 'white',
+    fontFamily: 'PFBeauSansPro-Regular',
+    fontSize: 15,
+    marginHorizontal: 10,
+    borderBottomWidth: 2,
+    borderColor: '#fff',
   },
 });
 export default QdShow;

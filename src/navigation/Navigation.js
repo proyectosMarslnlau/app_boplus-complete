@@ -12,8 +12,8 @@ import QdShow from '../screen/QdShow';
 import Radio from '../screen/Radio';
 import Selector from '../screen/Selector';
 import Splash from '../screen/Splash';
-import Tv from '../screen/Tv';
 import Programacion from '../screen/Programacion';
+
 //
 //Creamos el navigation
 const Stack = createStackNavigator();
@@ -63,17 +63,13 @@ const Navigation = () => {
           component={Programacion}
           options={{
             headerShown: false,
-            cardStyleInterpolator: forFade,
+            transitionSpec: {
+              open: config,
+              close: config,
+            },
           }}
         />
-        <Stack.Screen
-          name="tv"
-          component={Tv}
-          options={{
-            headerShown: false,
-            cardStyleInterpolator: forFade,
-          }}
-        />
+
         <Stack.Screen
           name="radio"
           component={Radio}
