@@ -4,12 +4,10 @@ import {
   View,
   Text,
   StyleSheet,
-  TouchableHighlight,
   TouchableOpacity,
   Image,
   Linking,
   BackHandler,
-  ScrollView,
   ImageBackground,
 } from 'react-native';
 //Importamos la medidas del dispositivo
@@ -28,11 +26,15 @@ import LinearGradient from 'react-native-linear-gradient';
 import CarouselRadio from '../item/CarouselRadio';
 //
 import boplusContext from '../context/boplus/boplusContext';
-
+//Context Alert
+import alertContext from '../context/alert/alertContext';
 //------------------------------------------------------------
 //Inicio del programa
 //------------------------------------------------------------
 const Radio = ({navigation}) => {
+  //
+  //Declaracion del STATE CONTEXT
+  const {funcionAlertError} = useContext(alertContext);
   //
   const {
     imagenpublicidadprincipal,
@@ -127,14 +129,6 @@ const Radio = ({navigation}) => {
       guardarEstado('Stop');
       await TrackPlayer.stop();
       config();
-      /*
-      Linking.openURL('whatsapp://send?phone=59171562642')
-        .then((data) => {
-          console.log('WhatsApp Opened');
-        })
-        .catch(() => {
-          alert('Make sure Whatsapp installed on your device');
-        });*/
     } catch (_) {}
   };
   //------------------------------------------
@@ -149,6 +143,21 @@ const Radio = ({navigation}) => {
       })
       .catch(() => {
         alert('Make sure Whatsapp installed on your device');
+      });
+  };
+  const onPressWhatsapp = () => {
+    Linking.openURL('whatsapp://send?phone=59171562642')
+      .then((data) => {
+        console.log('WhatsApp Opened');
+      })
+      .catch(() => {
+        let valorError = {
+          estado: true,
+          mensaje:
+            'No cuenta con la Aplicacion Whatsapp Instalado en su Dispositivo',
+        };
+        //Se inicializa la ALERTA ERROR
+        funcionAlertError(valorError);
       });
   };
   return (
@@ -172,10 +181,12 @@ const Radio = ({navigation}) => {
         style={styles.linearGradient}>
         <View style={styles.seccion_2}>
           <View style={styles.seccion_2_2}>
-            <Image
-              style={styles.logo_redes}
-              source={require('../resource/img/whatsapp.png')}
-            />
+            <TouchableOpacity onPress={onPressWhatsapp}>
+              <Image
+                style={styles.logo_redes}
+                source={require('../resource/img/whatsapp.png')}
+              />
+            </TouchableOpacity>
             <Text style={styles.titulo_encabezado}>Whatsapp</Text>
           </View>
           <View style={styles.seccion_2_3}>
